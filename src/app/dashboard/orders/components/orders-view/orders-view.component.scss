@@ -1,0 +1,64 @@
+.details {
+  img {
+    height: 70px;
+    width: 70px;
+  }
+
+}
+
+h3 {
+  font-size: 14px;
+}
+
+h2 {
+  font-size: 18px
+}
+
+img {
+  height: 70px;
+  width: 70px;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 8px !important;
+  width: 400px;
+}
+
+mat-expansion-panel-header {
+  padding: 5px 8px !important;
+  height: 70px;
+}
+
+th {
+  color: #d53f12;
+}
+
+mat-expansion-panel {
+  padding-left: 15px;
+}
+
+.rejected {
+  font-size: 20px;
+  color: red;
+  font-weight: 500;
+}
+
+.accept {
+  color: green;
+}
+
+.orderAccepted {
+  mat-radio-button {
+    margin-top: 15px;
+    margin-left: 30px;
+  }
+}
+
+.arrow {
+  ::ng-deep .mat-select-arrow {
+    border-left: 15px solid transparent !important;
+    border-right: none !important;
+    border-top: 15px solid transparent !important;
+    border-image-repeat: stretch !important;
+}
+}

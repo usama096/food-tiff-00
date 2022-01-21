@@ -1,0 +1,61 @@
+<mat-card fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+  <mat-card-title fxFlexAlign="start">{{ pageTitle }}</mat-card-title>
+
+  <form [formGroup]="usersForm" fxFill>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start" style="margin-bottom: 15px">
+      <div fxFlex="15">
+        <app-file-upload (fileUpload)="onFileUpload($event)" [imageSrc]="usersForm.get('profileImgUrl')?.value">
+        </app-file-upload>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
+        <mat-form-field appearance="outline" fxFlexFill>
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="firstName" required [readonly]="isReadOnlyMode" />
+          <mat-error *ngIf="hasError('firstName', 'required')">First Name Required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlexFill>
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" required [readonly]="isReadOnlyMode" />
+          <mat-error *ngIf="hasError('allergyInfo', 'required')">Last Name Required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="end start">
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput formControlName="mobileNumber" required [readonly]="isReadOnlyMode" />
+        <mat-error *ngIf="hasError('mobileNumber', 'required')">Mobile number is required</mat-error>
+        <mat-error *ngIf="hasError('mobileNumber', 'minLength')">Please enter 11 digits mobile number</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start">
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required [readonly]="isReadOnlyMode" />
+        <mat-error *ngIf="hasError('email', 'required')">Email is requires</mat-error>
+        <mat-error *ngIf="hasError('email', 'minLength')">Name must contain atleast 4 characters</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>User Type</mat-label>
+        <mat-select formControlName="userType" name="User Type">
+          <mat-option *ngFor="let userType of userType" [value]="userType">
+            {{ userType }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="hasError('userType', 'required')">User Type is required</mat-error>
+      </mat-form-field>
+      <!-- <mat-slide-toggle  formControlName="isActive">{{usersForm.get("isActive")?.value}}</mat-slide-toggle> -->
+    </div>
+  </form>
+
+  <div class="button" fxFlexAlign="end">
+    <button mat-stroked-button color="primary" [routerLink]="[isUpdateMode ? '../../' : '../']">
+      CANCEL
+    </button>
+    <button *ngIf="!isReadOnlyMode" mat-flat-button color="primary" (click)="addUser()">
+      {{ userId ? "UPDATE" : "SUBMIT" }}
+    </button>
+  </div>
+</mat-card>

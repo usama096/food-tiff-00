@@ -1,0 +1,100 @@
+<div fxLayout="row" fxLayoutGap="20px" class="main-container">
+  <mat-card fxFlex="30">
+    <h2>{{ title }}</h2>
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+      <form [formGroup]="planInfoFg" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="30px">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Plan Category</mat-label>
+          <mat-select formControlName="planCategory" required>
+            <mat-option>Plan Category</mat-option>
+            <mat-option *ngFor="let plan of plansList" [value]="plan.planCategory">
+              {{ plan.planCategory }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="planInfoFg.get('planCategory')?.hasError('required')">Field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Plan Type</mat-label>
+          <mat-select formControlName="planType" required>
+            <mat-option>Plan Type</mat-option>
+            <mat-option *ngFor="let plan of plansList" [value]="plan.planType">
+              {{ plan.planType }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="planInfoFg.controls['planType'].errors?.required">Field is required</mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxFill>
+          <mat-form-field appearance="outline" fxFlex="45">
+            <mat-label>Weekly Price</mat-label>
+            <input matInput type="number" placeholder="Weekly Price" formControlName="weekly_price" required />
+            <mat-error *ngIf="planInfoFg.controls['weekly_price'].errors?.required">Field is required</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="45">
+            <mat-label>Monthly Price</mat-label>
+            <input matInput type="number" placeholder="Monthly Price" formControlName="monthly_price"/>
+          </mat-form-field>
+        </div>
+        <mat-form-field class="example-full-width" appearance="outline" fxFill>
+          <mat-label>Description</mat-label>
+          <textarea type="text" matInput placeholder="Description" formControlName="description"
+            [matTextareaAutosize]="true" [matAutosizeMinRows]="10" [matAutosizeMaxRows]="15"></textarea>
+            <mat-error *ngIf="planInfoFg.controls['description'].errors?.required">Field is required</mat-error>
+
+        </mat-form-field>
+      </form>
+    </div>
+  </mat-card>
+
+  <mat-card fxFlex="70" fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <h2 fxFlex="50">{{ title }}</h2>
+      <mat-form-field appearance="outline" class="full-width" fxFlex="30">
+        <mat-label>Enter date range for your Plan</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeFg" [min]="todayDate" [max]="endDate" [disabled]="!planInfoFg.valid">
+          <input matStartDate placeholder="Start date" formControlName="start" />
+          <input matEndDate placeholder="End date" formControlName="end" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error *ngIf="dateRangeFg.controls['end'].errors?.required">Please enter start and end date</mat-error>
+
+      </mat-form-field>
+    </div>
+    <form [formGroup]="planInfoFg" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" placeholder="Date" formControlName="date"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Meal 1</mat-label>
+        <input matInput type="text" placeholder="Meal 1" formControlName="meal1"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Meal 2</mat-label>
+        <input matInput type="text" placeholder="Meal 2" formControlName="meal2"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Meal 3</mat-label>
+        <input matInput type="text" placeholder="Meal 3" formControlName="meal3"/>
+      </mat-form-field>
+
+    </form>
+
+    <app-meal-planner *ngIf="dateRangeFg.value.start && dateRangeFg.value.end && loadMeals"
+      [start]="dateRangeFg.value.start" [end]="dateRangeFg.value.end" [mealtype]="planInfoFg.value.planType">
+    </app-meal-planner>
+    <div *ngIf="dateRangeFg.value.start && dateRangeFg.value.end ? showMessage : true">
+      <h2 class="message">Please Select Date Range</h2>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px" style="height: 100%">
+      <button mat-stroked-button color="primary" (click)="onCancel()">
+        Cancel
+      </button>
+      <button mat-flat-button color="primary" (click)="savePlan()">
+        Save Plan
+      </button>
+    </div>
+  </mat-card>
+</div>

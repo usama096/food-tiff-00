@@ -1,0 +1,150 @@
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px" class="main-container">
+  <div fxFlex="70">
+    <mat-card-title>Good afternoon Admin!</mat-card-title>
+    <mat-card-subtitle>Here's what's happening at
+      <span style="color: #d53f12" class="fb-14">Food Tiff</span>
+      today
+    </mat-card-subtitle>
+    <div fxLayout="row" fxLayoutGap="20px" fxlayoutAlign="start start" class="charts-container">
+      <mat-card fxFlex="70">
+        <h2>Sales Overview</h2>
+        <ngx-charts-bar-vertical [view]="[650, 200]" [results]="saleData" [xAxisLabel]="'Orders'"
+          [legendTitle]="'Product Sale'" [yAxisLabel]="'Sale'" [legend]="true" [showXAxisLabel]="true"
+          [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
+        </ngx-charts-bar-vertical>
+      </mat-card>
+      <mat-card style="background-color: #F29B62;
+      color: #fff;" fxFlex="30" fxLayout="column" fxLayoutAlign="start start" class="recent-bill">
+        <div fxFlex="30" fxFlexFill fxLayout="row" fxLayoutAlign="start start">
+          <div fxFlex="70" fxLayout="column">
+            <h3 style="line-height: 4px">Recent Bill</h3>
+            <h2 class="f-16" style="line-height: 4px">{{total_Price}}/Rs.</h2>
+          </div>
+          <h3 class="fb-14" fxFlex="30" fxFlexAlign="start">#FT10857</h3>
+        </div>
+        <div fxFlex="70" fxFlex="30" fxFlexFill fxLayout="row" fxLayoutAlign="start start"  *ngFor="let order of orders">
+          <h3 class="f-14 mb-0" fxFlex="80" fxFlexAlign="start">
+           {{order.orderName}}
+          </h3>
+          <h3 class="f-14 mb-0" fxFlex="20" fxFlexAlign="start">{{order.price}}/Rs.</h3>
+        </div>
+        <button style="margin-left: auto; margin-right: auto; color: #f29b62" mat-flat-button>
+          View Full Details
+        </button>
+      </mat-card>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between start" class="charts">
+      <mat-card fxFlex="20" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="30" style="margin-right: 10px">
+          <mat-icon style="background-color: #49c3a1">preview</mat-icon>
+        </div>
+        <div fxFlex="70" fxFlexAlign="end">
+          <h3 style="line-height: 4px" class="grey f-14">Revenue</h3>
+          <h2 style="line-height: 4px">$5,847</h2>
+        </div>
+      </mat-card>
+      <mat-card fxFlex="20" fxLayout="row" fxLayoutgap="10px" fxLayoutAlign="start center">
+        <div fxFlex="30" style="margin-right: 10px">
+          <mat-icon style="background-color: #9689e4">receipt_long</mat-icon>
+        </div>
+        <div fxFlex="70" fxFlexAlign="end">
+          <h3 style="line-height: 4px" class="grey f-14">Orders</h3>
+          <h2 style="line-height: 4px">352</h2>
+        </div>
+      </mat-card>
+      <mat-card fxFlex="20" fxLayout="row" fxLayoutgap="10px" fxLayoutAlign="start center">
+        <div fxFlex="30" style="margin-right: 10px">
+          <mat-icon style="background-color: #fcb44d">delivery_dining</mat-icon>
+        </div>
+        <div fxFlex="70" fxFlexAlign="end">
+          <h3 style="line-height: 4px" class="grey f-14">Deliveries</h3>
+          <h2 style="line-height: 4px">852</h2>
+        </div>
+      </mat-card>
+      <mat-card fxFlex="20" fxLayout="row" fxLayoutgap="10px" fxLayoutAlign="start center">
+        <div fxFlex="30" style="margin-right: 10px">
+          <mat-icon style="background-color: #f07450">restaurant</mat-icon>
+        </div>
+        <div fxFlex="70" fxFlexAlign="end">
+          <h3 style="line-height: 4px" class="grey f-14">Dine-Ins</h3>
+          <h2 style="line-height: 4px">502</h2>
+        </div>
+      </mat-card>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px" class="list" fxLayoutAlign="start start" class="dishes">
+      <mat-card fxFlex="50" fxFlexFill fxLayout="column">
+        <div fxLayout="row" fxFlexFill>
+          <h2 fxFlex="70">Trending Dishes</h2>
+          <!-- <mat-form-field
+            appearance="outline"
+            style="font-size: 12px"
+            fxFlexAlign="end"
+          >
+            <mat-select [formControl]="days">
+              <mat-option value="week">This Week</mat-option>
+              <mat-option value="month">This Month</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        </div>
+        <div fxFlex="70" fxFlexFill fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px" *ngFor="let dish of dishes">
+          <div><img [src]="dish.image" /></div>
+          <div fxFlex="70" fxLayout="column" fxLayoutAlign="start start" style="padding: 10px;">
+            <h3 class="fb-14" style="line-height:0px">{{dish.name}}</h3>
+            <h3 class="grey f-14" style="line-height:0px">
+              {{dish.description}}
+            </h3>
+          </div>
+          <h3 fxFlex="13" fxFlexAlign="start">{{dish.price}}/Rs.</h3>
+        </div>
+
+      </mat-card>
+      <mat-card fxFlex="50" fxFlexFill fxLayout="column">
+        <h2>Employee Schedual</h2>
+        <div  fxFlex="70" fxFlexFill fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px" *ngFor="let employee of employees">
+          <img [src]="employee.image" alt="food" />
+          <div fxFlex="70" fxLayout="column" fxLayoutAlign="start start" style="padding: 10px;">
+            <h3 class="fb-14" style="line-height: 0px">{{employee.name}}</h3>
+            <h3 style="line-height: 0px" class="grey f-12">{{employee.designation}}</h3>
+          </div>
+          <h3 class="f-14" fxFlex="20" fxFlexAlign="start">{{employee.time}}</h3>
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+  <mat-card fxFlex="30" class="reservations">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <h2 class="f-20">Upcoming Orders</h2>
+      <button mat-flat-button color="primary" [routerLink]="['../upcoming-orders']">Upcoming Orders</button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let orders of upcomingOrders">
+      <span class="f-12" fxFlex="15" fxLayoutAlign="start"><b>{{orders.time? orders.time: '&#9679;'}}</b></span>
+      <mat-list-item fxFlex="85"><b>{{orders.customerName}}</b> </mat-list-item>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <span class="f-12" fxFlex="15" fxLayoutAlign="start">&#9679;</span>
+      <mat-list-item fxFlex="85">
+        <div fxFlex="100" fxLayout="column"  fxLayoutGap="10px">
+          <span fxFlex="100%"> <b>Harold Nelson + 1</b></span>
+          <div fxLayout="row" fxLayoutAlign="space-evenly center" fxFlex="100">
+            <div fxFlex="50">
+              <span class="f-12 grey">Time</span><br />
+              <span class="f-15">12:00</span>
+            </div>
+            <div fxFlex="50">
+              <span class="f-12 grey">seating</span><br />
+              <span class="f-15">Booth</span>
+            </div>
+          </div>
+          <span>Notes:</span>
+          <p>
+            This is for a company Lunch can you please seat us somewhere
+            private.
+          </p>
+        </div>
+
+      </mat-list-item>
+    </div>
+  </mat-card>
+</div>

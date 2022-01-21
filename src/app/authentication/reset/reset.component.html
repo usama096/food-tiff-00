@@ -1,0 +1,54 @@
+<div fxLayout="row" class="maincontainer" fxLayoutAlign="center center">
+    <div fxFlex="1 1 40%" fxLayout="column" fxLayoutGap="20px">
+        <mat-card-title fxLayoutAlign="center center">Food-Tiff</mat-card-title>
+
+        <mat-card fxLayout="column" class="outline">
+            <button mat-button fxFlexAlign="start" color="primary" (click)="goBack()">
+                <mat-icon>chevron_left</mat-icon>
+                Back
+            </button>
+            <div class="subcontainer" fxLayout="column" fxLayoutGap="20px">
+                <mat-card-title fxLayoutAlign="center center">Creat a New Password</mat-card-title>
+                <p>
+                    <!-- Make sure your password is atleast 8 characters long. -->
+                    Password mustbe altleast 8 character long, include atleast one Upper case,
+                     one lower case and one numeric value and one special characters
+                </p>
+                <mat-card-content fxLayout="column">
+                    <form [formGroup]="resetForm" fxLayout="column">
+
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Password</mat-label>
+                            <input fxFlexFill matInput type="password" placeholder="Enter your password"
+                                [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="hasError('password','required')">Password is required</mat-error>
+                            <mat-error *ngIf="hasError('password','pattern')">Enter password with capital letters and special characters</mat-error>
+                            <!-- <mat-error *ngIf="hasError('password','pattern')"> Password mustbe altleast 8 character long, include atleast one Upper case,
+                                one lower case and one numeric value and one special characters</mat-error> -->
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Confirm Password</mat-label>
+                            <input fxFlexFill matInput type="password" placeholder="Enter your password"
+                                [type]="hidee ? 'password' : 'text'" formControlName="confirmPassword" required>
+                            <button mat-icon-button matSuffix (click)="hidee = !hidee"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidee">
+                                <mat-icon>{{hidee ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="hasError('confirmPassword','required')">Password is required</mat-error>
+                            <mat-error *ngIf="hasError('confirmPassword','match')">Password does not match.</mat-error>
+                        </mat-form-field>
+
+                    </form>
+                </mat-card-content>
+                <button fxFlexFill mat-raised-button  class="primary-button" (click)="onSubmit()">Save
+                    Password</button>
+            </div>
+        </mat-card>
+    </div>
+</div>

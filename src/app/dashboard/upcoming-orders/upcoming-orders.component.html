@@ -1,0 +1,67 @@
+<div class="main-container">
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <span class="fb-20" fxFlexAlign="center">Upcoming Orders</span>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" [min]="minDate" [formControl]="dateCtrl">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <mat-tab-group mat-align-tabs="center" (selectedTabChange)="matTabChanged($event)">
+    <mat-tab label="BreakFast">
+      <ng-container *ngTemplateOutlet="upcomingList"></ng-container>
+    </mat-tab>
+    <mat-tab label="Lunch">
+      <ng-container *ngTemplateOutlet="upcomingList"></ng-container>
+    </mat-tab>
+    <mat-tab label="Dinner">
+      <ng-container *ngTemplateOutlet="upcomingList"></ng-container>
+    </mat-tab>
+
+    <ng-template #upcomingList>
+      <mat-card>
+        <div *ngFor="let order of orders" fxLayout="column" fxLayoutAlign="start start">
+          <div fxLayout="row" fxLayoutAlign="space-around start" fxFill>
+            <span class="fb-18 mb-8" fxFlexAlign="center" fxFlex="20">{{order.category}}</span>
+            <div fxlayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+              <mat-card>
+                <img [src]="order.image1" [alt]="order.image1">
+                <div fxLayout="row" fxLayoutAlign="space-around start" fxFlexFill="40">
+                  <span class="f-16">{{order.meal1}}</span>
+                  <span class="fb-16">x {{order.ordersforMeal1}}</span>
+                </div>
+              </mat-card>
+            </div>
+            <div fxlayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+              <mat-card>
+                <img [src]="order.image2" [alt]="order.meal2">
+                <div fxLayout="row" fxLayoutAlign="space-around start" fxFlexFill="40">
+                  <span class="f-16">{{order.meal2}}</span>
+                  <span class="fb-16">x {{order.ordersforMeal2}}</span>
+                </div>
+              </mat-card>
+            </div>
+            <table mat-table [dataSource]="dataSource" fxFlex="30">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef> Quantity</th>
+                <td mat-cell *matCellDef="let element"> x {{element.quantity}} </td>
+              </ng-container>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Price</th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          <mat-divider [inset]="true" style="margin: 12px;"></mat-divider>
+        </div>
+      </mat-card>
+    </ng-template>
+  </mat-tab-group>
+</div>

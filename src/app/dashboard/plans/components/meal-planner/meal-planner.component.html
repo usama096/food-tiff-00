@@ -1,0 +1,45 @@
+<div fxLayout="row" fxLayoutAlign="start start" style="height: 480px; overflow-y: scroll">
+  <table mat-table [dataSource]="dates" class="mat-elevation-z0 demo-table" fxFlexFill>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let element">
+        <a>{{ element.date | date: "EEEE, MMMM d, y" }}</a>
+      </td>
+    </ng-container>
+    <ng-container *ngFor="let meal of dailyMeals">
+      <ng-container [matColumnDef]="meal">
+        <th mat-header-cell *matHeaderCellDef>{{ meal }}</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field appearance="outline">
+            <mat-select (selectionChange)="element[meal] = $event.value">
+              <mat-select-trigger>
+                {{ element[meal].name }}
+              </mat-select-trigger>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="mealFilterCtrl" placeholderLabel="Search..."
+                  [clearSearchInput]="true" noEntriesFoundLabel="No meal found"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option value="">--Select meal--</mat-option>
+              <mat-option *ngFor="let food of filteredMeals" [value]="food" style="line-height: 12px">
+                <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px">
+                  <div fxFlex="none">
+                    <img [src]="food.imageUrl" [title]="food.name" [style.width.px]="imageWidth"
+                      [style.margin.px]="imageMargin" />
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="4px">
+                    <div class="fb-14" fxFlex="none">{{ food.name }}</div>
+                    <div class="f-12 color-grey" fxFlex="none">
+                      {{ food.description }}
+                    </div>
+                  </div>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

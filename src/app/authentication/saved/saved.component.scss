@@ -1,0 +1,22 @@
+.maincontainer {
+  min-height: 100% !important;
+  min-width: 100% !important;
+  padding-top: 150px;
+}
+  // mat-card.outline {
+  //   border: 1px solid #d53f12;
+  // }
+  div.subcontainer {
+    padding: 5% 20% 10% 20%;
+  }
+  mat-icon {
+    margin-right: 10px;
+  }
+  div.subcontainer p {
+    text-align: center;
+  }
+  mat-card.outline img {
+      height: 100px;
+      width: 150px;
+      text-align: center;
+  }

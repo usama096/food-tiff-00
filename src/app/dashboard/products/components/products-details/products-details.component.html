@@ -1,0 +1,69 @@
+<!-- <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px" class="container">
+  <h2>{{ pageTitle }}</h2>
+
+  <mat-card *ngIf="products" fxLayout="row" fxLayoutAlign="start start">
+    <div fxLayout="column" fxLayoutAlign="start start" >
+      <div>
+        <span><b>ProductID:</b></span>
+        <h4>{{ products.id }}</h4>
+      </div>
+      <div>
+        <span><b>Product Name:</b></span>
+        <h4>{{ products.name }}</h4>
+      </div>
+      <div>
+        <span><b>Description:</b></span>
+        <h4>{{ products.description }}</h4>
+      </div>
+      <div>
+        <span><b>Short Description:</b></span>
+        <h4>{{ products.shortDesc }}</h4>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between start" fxFill>
+      <div fxFlex="45">
+        <span><b>Product Type:</b></span>
+        <h4>{{ products.prodType }}</h4>
+      </div>
+      <div fxFlex="45">
+        <span><b>Category:</b></span>
+        <h4>{{ products.category }}</h4>
+      </div>
+    </div>
+      <div>
+        <span><b>Ingrediants:</b></span>
+        <h4>{{ products.ingrediants }}</h4>
+      </div>
+      <div>
+        <span><b>Calories:</b></span>
+        <h4>{{ products.calories }}</h4>
+      </div>
+      <div>
+        <span><b>Allergy Info:</b></span>
+        <h4>{{ products.allergyInfo }}</h4>
+      </div>
+
+
+      <div>
+        <span><b>Price:</b></span>
+        <h4>{{ products.price | currency: "USD" }}</h4>
+      </div>
+      <div class="button">
+        <button mat-stroked-button [routerLink]="['../../products']" color="primary">
+          BACK
+        </button>
+        <button mat-flat-button color="primary" (click)="deleteProduct()">
+          DELETE
+        </button>
+        <button mat-flat-button color="primary" [routerLink]="['edit']">
+          EDIT
+        </button>
+
+      </div>
+    </div>
+    <mat-card-content fxFlexAlign="start">
+      <img [src]="products.image" alt="image" [title]="products.name" [style.width.px]="imageWidth"
+        [style.margin.px]="imageMargin" />
+    </mat-card-content>
+  </mat-card>
+</div> -->
+

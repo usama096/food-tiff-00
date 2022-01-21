@@ -1,0 +1,75 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%" class="box-shadow">
+
+    <!-- <div class="logo">
+      <img src="assets/images/logo.png" alt="logo">
+    </div> -->
+    <div fxFlex="1 1 15%" fxLayoutAlign="start center" class="foodtiff">
+        <span><a href="http://localhost:4200/dashboard/home">Food-Tiff</a></span>
+    </div>
+    <span class="example-spacer"></span>
+    <div fxFlex="1 1 30%" fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center center">
+        <button mat-icon-button>
+            <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon matBadge="1" matBadgeColor="primary" [matBadgeHidden]="hidden" (click)="visibility()" fontSet="material-icons-outlined">notifications
+            </mat-icon>
+        </button>
+
+        <mat-divider vertical style="height:50px"></mat-divider>
+
+            <h4 style="line-height: 24px; font-size: 15px;">{{userName}}</h4>
+
+        <div class="profile-image" fxLayoutAlign="center">
+            <img src="assets/images/khabib.jpg" alt="PP">
+            <button fxFlexAlign="center" mat-icon-button [matMenuTriggerFor]="profile">
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #profile="matMenu">
+                <button mat-menu-item (click)="logOut()">
+                    <mat-icon fontSet="material-icons-outlined">logout</mat-icon><a>Logout</a>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon fontSet="material-icons-outlined">settings</mat-icon>Settings
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+</mat-toolbar>
+<mat-drawer-container class="example-container" fxLayout="row" class="box-shadow">
+    <mat-drawer mode="side" opened>
+
+        <mat-nav-list [routerLink]="['home']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+            fxLayoutAlign="center center">
+            <mat-icon fontSet="material-icons-outlined">home</mat-icon>
+            <small fxFlexAlign="center">Home</small>
+        </mat-nav-list>
+
+        <mat-nav-list [routerLink]="['products']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+            fxLayoutAlign="center center">
+            <mat-icon fontSet="material-icons-outlined">approval</mat-icon>
+            <small fxFlexAlign="center">Products</small>
+        </mat-nav-list>
+        <mat-nav-list [routerLink]="['plans']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+            fxLayoutAlign="center center">
+            <mat-icon fontSet="material-icons-outlined">shopping_bag</mat-icon>
+            <small fxFlexAlign="center">Plans</small>
+        </mat-nav-list>
+        <mat-nav-list [routerLink]="['orders']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+            fxLayoutAlign="center center">
+            <mat-icon fontSet="material-icons-outlined">list_alt</mat-icon>
+            <small fxFlexAlign="center">Orders</small>
+        </mat-nav-list>
+        <mat-nav-list [routerLink]="['users']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+            fxLayoutAlign="center center">
+            <mat-icon fontSet="material-icons-outlined">people</mat-icon>
+            <small fxFlexAlign="center">Users</small>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content fxFlex="1 1 100%">
+        <router-outlet></router-outlet>
+
+    </mat-drawer-content>
+
+</mat-drawer-container>
+

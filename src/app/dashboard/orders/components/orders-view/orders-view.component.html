@@ -1,0 +1,180 @@
+<div fxLayout="column" fxLayoutGap="1.5%">
+  <div fxLayout="row" fxFill fxLayoutAlign="space-between start">
+    <div class="fb-20">Order #{{ ordernumber }}</div>
+    <!-- <div>
+      <div *ngIf="message" class="rejected">
+        {{ statusInfoGrp.value.specificRejectionReason }}!
+      </div>
+      <div [formGroup]="statusInfoGrp" *ngIf="!rejectOrders">
+        <mat-form-field appearance="outline" [ngClass]="{
+            arrow:
+              this.statusInfoGrp.get('statusInfo')?.value === 'Approval Pending'
+          }">
+          <mat-label>Order Status Info</mat-label>
+          <mat-select formControlName="statusInfo">
+            <mat-option *ngFor="let order of orderDetails" [value]="order">
+              {{ order }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-icon-button *ngIf="showOrderdetails" class="accept" (click)="updateOrder()">
+          <mat-icon class="f-30">check_circle</mat-icon>
+        </button>
+      </div>
+    </div> -->
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="2%">
+    <mat-divider vertical style="height: 50px"></mat-divider>
+    <div fxFlex="20%" fxLayout="column" fxLayoutAlign="start start">
+      <h3>Plan</h3>
+      <h2 style="line-height: 0px">Executive</h2>
+    </div>
+
+    <mat-divider vertical style="height: 50px"></mat-divider>
+    <div fxFlex="20%" fxLayout="column" fxLayoutAlign="start start">
+      <h3>Delivery Slot</h3>
+      <h2 style="line-height: 0px">12pm:12:30pm</h2>
+    </div>
+    <mat-divider vertical style="height: 50px"></mat-divider>
+    <div fxFlex="20%" fxLayout="column" fxLayoutAlign="start start">
+      <h3>Address</h3>
+      <h2 style="line-height: 0px">Lincoln street 45</h2>
+    </div>
+    <mat-divider vertical style="height: 50px"></mat-divider>
+    <div fxFlex="20%" fxLayout="column" fxLayoutAlign="start start">
+      <h3>Austin Paul</h3>
+      <h2 style="line-height: 0px">+926928752</h2>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxFlexAlign="start center" fxLayoutGap="15px">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle class="details" fxLayout="column" fxLayoutAlign="start end"
+        *ngFor="let order of orders">
+        <mat-expansion-panel-header fxFill>
+          <mat-panel-title>
+            <div fxFlex="20%"><img [src]="order.image" alt="cake" /></div>
+            <div fxFlex="20%" fxFlexAlign="center">{{ order.name }}</div>
+            <div fxFlex="15%" class="f-16" fxFlexAlign="center">
+              x {{ order.number_of_orders }}
+            </div>
+            <div fxFlex="25%" class="fb-15" fxFlexAlign="center">
+              {{ date | date: "MMM d, y" }}
+            </div>
+            <div fxFlex="20%" fxLayoutAlign="end" fxFlexAlign="center">
+              <button mat-stroked-button color="primary">View Adon</button>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <table mat-table [dataSource]="dataSource" fxFlexFill>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">x {{ element.quantity }}</td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-divider></mat-divider>
+    <div fxLayout="row" fxLayouALign="space-between start" fxLayoutGap="10%">
+      <div fxFlex="70%" fxLayout="column" fxLayoutAlign="start start">
+        <div [formGroup]="statusInfoGrp" fxLayout="row" fxLayoutAlign="start start" fxLayoutgap="20px" fxFill>
+          <div fxFlex="30%">
+            <mat-radio-group formControlName="acceptOrder" fxFill>
+              <mat-radio-button value="Accept" (click)="acceptOrder()">Accept Order</mat-radio-button>
+            </mat-radio-group>
+            <mat-radio-group class="orderAccepted" formControlName="orderAcceptanceNotes"
+              *ngIf="statusInfoGrp.value.acceptOrder">
+              <mat-radio-button style="display: block" [value]="order" *ngFor="let order of orderAccepted">{{ order }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div fxFlex="30%">
+            <mat-radio-group formControlName="rejectOrder">
+              <mat-radio-button value="Reject" (click)="rejectOrder()">Reject Order</mat-radio-button>
+            </mat-radio-group>
+            <mat-radio-group fxFill class="orderAccepted" formControlName="specificRejectionReason"
+              *ngIf="statusInfoGrp.value.rejectOrder">
+              <mat-radio-button style="display: block" [value]="order" *ngFor="let order of orderRejectionReason">{{
+                order }}
+              </mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field appearance="outline" *ngIf="reasonforRejection" style="
+                width: 100%;
+                padding: 0px;
+                margin-left: 25px;
+                margin-top: 5px;
+              " class="orderAccepted">
+              <mat-label>Specify Reason</mat-label>
+              <textarea matInput formControlName="specificRejectionReason"></textarea>
+            </mat-form-field>
+            <button mat-flat-button color="primary" style="margin-left: 25px; margin-top: 2px"
+              (click)="submitOrderRejection()" *ngIf="submitRejection">
+              Submit
+            </button>
+          </div>
+          <div fxFlex = "40%" fxLayoutAlign="end start" style="white-space: pre-line;">
+            <div *ngIf="message" class="rejected">
+              {{ statusInfoGrp.value.specificRejectionReason }}!
+            </div>
+            <div [formGroup]="statusInfoGrp" *ngIf="!rejectOrders">
+              <mat-form-field
+                appearance="outline"
+                [ngClass]="{
+                  arrow:
+                    this.statusInfoGrp.get('statusInfo')?.value === 'Approval Pending'
+                }"
+              >
+                <mat-label>Order Status Info</mat-label>
+                <mat-select formControlName="statusInfo">
+                  <mat-option *ngFor="let order of orderDetails" [value]="order">
+                    {{ order }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button
+                mat-icon-button
+                *ngIf="showOrderdetails"
+                class="accept"
+                (click)="updateOrder()"
+              >
+                <mat-icon class="f-30">check_circle</mat-icon>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start end" fxFlex="20%" fxFill fxLayoutGap="5px">
+        <div fxLayut="row" fxLayoutAlign="start start" fxFill>
+          <div fxFlex="70">Sub Total</div>
+          <div fxFlex="30" fxLayoutAlign="end">{{ subtotal }}</div>
+        </div>
+        <div fxLayut="row" fxLayoutAlign="start start" fxFill>
+          <div fxFlex="70">Discount</div>
+          <div fxFlex="30" fxLayoutAlign="end">{{ discount }}%</div>
+        </div>
+        <div fxLayut="row" fxLayoutAlign="start start" fxFill class="fb-14">
+          <div fxFlex="70">Total</div>
+          <div fxFlex="30" fxLayoutAlign="end">{{ totalPrice }}</div>
+        </div>
+
+        <button fxLayoutAlign="end" mat-flat-button color="primary" (click)="submitOrder()">
+          Accept Order
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

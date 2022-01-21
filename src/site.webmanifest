@@ -1,0 +1,63 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="main-container">
+    <div fxFlexAlign="end" style="padding-right: 7px;">
+      <button mat-flat-button color="primary" (click)="addProduct()">
+        <mat-icon style="color: white">add</mat-icon>Add Product
+      </button>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start start">
+      <mat-card fxFlex="24" *ngFor="let product of dataSource">
+        <div fxLayout="column" fxLayoutGap="10px">
+          <div class="image-container" fxFlexAlign="center">
+            <img [src]="product.image" alt="soup" />
+          </div>
+          <div fxLayout="column" fxLayoutGap="10px" class="data-container">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" fxFill>
+            <div class="title f-20" fxFlex="75">{{ product.name }}</div>
+            <div class="title fb-13" fxFlex="20" fxLayoutAlign="end" fxFlexAlign="end">
+              {{ product.price}}/Rs.
+            </div>
+          </div>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxFlexFill>
+            <div fxLayout="column">
+              <div>
+                <mat-icon>schedule</mat-icon><span class="fb-14 icon-content">20</span>
+              </div>
+              <span class="fb-12">Minutes</span>
+            </div>
+            <div fxLayout="column">
+              <div>
+                <mat-icon fontSet="material-icons-outlined">monitor_weight</mat-icon><span class="fb-14 icon-content">{{product.weight}}</span>
+              </div>
+              <span class="fb-12">Weight</span>
+            </div>
+            <div fxLayout="column">
+              <div>
+                <mat-icon fontSet="material-icons-outlined">person</mat-icon><span class="fb-14 icon-content">2-3</span>
+              </div>
+              <span class="fb-12">Serving </span>
+            </div>
+          </div>
+          <div fxFlexAlign="center">
+            {{ product.description }}
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlexFill class="action">
+            <button mat-icon-button [routerLink]="[product.id]" matTooltip="View Details">
+              <mat-icon fontSet="material-icons-outlined">info</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon fontSet="material-icons-outlined" (click)="deleteProduct(product)" matTooltip="Delete Item">
+                delete</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon fontSet="material-icons-outlined" [routerLink]="[product.id, 'edit']" matTooltip="Edit Item">
+                edit</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      </mat-card>
+    </div>
+  </div>

@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+div.orders-container {
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
+
+div.orders-list {
+  padding: 2%;
+  background-color: rgb(235, 235, 235);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+div.orders-details {
+  background-color: white;
+  padding: 2%;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+}

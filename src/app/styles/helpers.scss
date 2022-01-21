@@ -1,0 +1,259 @@
+/* You can add global styles to this file, and also import other style files */
+
+@mixin padding-all($v) {
+  padding: $v+px !important;
+}
+
+@mixin padding-top($v) {
+  padding-top: $v+px !important;
+}
+
+@mixin padding-left($v) {
+  padding-left: $v+px !important;
+}
+
+@mixin padding-right($v) {
+  padding-right: $v+px !important;
+}
+
+@mixin padding-bottom($v) {
+  padding-bottom: $v+px !important;
+}
+
+@mixin margin-all($v) {
+  margin: $v+px !important;
+}
+
+@mixin margin-top($v) {
+  margin-top: $v+px !important;
+}
+
+@mixin margin-left($v) {
+  margin-left: $v+px !important;
+}
+
+@mixin margin-right($v) {
+  margin-right: $v+px !important;
+}
+
+@mixin margin-bottom($v) {
+  margin-bottom: $v+px !important;
+}
+
+@mixin font-size($s) {
+  font-size: $s+px !important;
+}
+
+@mixin font-weight($w) {
+  font-weight: $w !important;
+}
+
+
+@for $i from 0 through 25 {
+  .pa-#{$i*4} {
+    @include padding-all($i*4);
+  }
+
+  .pt-#{$i*4} {
+    @include padding-top($i*4);
+  }
+
+  .pl-#{$i*4} {
+    @include padding-left($i*4);
+  }
+
+  .pr-#{$i*4} {
+    @include padding-right($i*4);
+  }
+
+  .pb-#{$i*4} {
+    @include padding-bottom($i*4);
+  }
+
+  // margin
+  .ma-#{$i*4} {
+    @include margin-all($i*4);
+  }
+
+  .mt-#{$i*4} {
+    @include margin-top($i*4);
+  }
+
+  .ml-#{$i*4} {
+    @include margin-left($i*4);
+  }
+
+  .mr-#{$i*4} {
+    @include margin-right($i*4);
+  }
+
+  .mb-#{$i*4} {
+    @include margin-bottom($i*4);
+  }
+
+  // negative margin
+  .mna-#{$i*4} {
+    @include margin-all($i*-4);
+  }
+
+  .mnt-#{$i*4} {
+    @include margin-top($i*-4);
+  }
+
+  .mnl-#{$i*4} {
+    @include margin-left($i*-4);
+  }
+
+  .mnr-#{$i*4} {
+    @include margin-right($i*-4);
+  }
+
+  .mnb-#{$i*4} {
+    @include margin-bottom($i*-4);
+  }
+}
+
+
+.full-width {
+  width: 100% !important;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top     : 0;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+
+.content-center {
+  justify-content: center !important;
+}
+
+.vertically-middle {
+  vertical-align: middle !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.no-text-decoration {
+  text-decoration: none;
+}
+
+
+// .color-main {
+//   color: $main-color !important;
+// }
+
+
+.color-grey {
+  color: #AAADB8 !important;
+}
+.color-primary {
+  color: #d53f12 !important;
+}
+// .color-primary {
+//   color: $primary-color !important
+// }
+
+// .color-white {
+//   color: $white-color !important;
+// }
+
+// .color-warn {
+//   color: $error-color !important;
+// }
+
+// .bg-warn {
+//   background-color: $error-color !important;
+// }
+
+// .bg-white {
+//   background-color: $white-color !important;
+// }
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-drag {
+  cursor: all-scroll !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pre-wrap {
+  white-space  : pre-wrap;
+  word-break   : break-word;
+  overflow-wrap: break-word;
+  word-wrap    : break-word;
+
+}
+
+
+@for $i from 10 through 30 {
+  .f-#{$i} {
+    @include font-size($i);
+  }
+
+  .fb-#{$i} {
+    @include font-size($i);
+    font-weight: bold !important;
+
+  }
+
+
+}
+
+.fb {
+  font-weight: bold !important;
+}
+
+.f-600 {
+  font-weight: 600 !important;
+}
+
+.f-800 {
+  font-weight: 800 !important;
+}
+
+.select-color-box {
+  width        : 24px;
+  height       : 24px;
+  border-radius: 4px;
+}
+
+.default-line-height {
+  line-height: 1.71 !important;
+}
+
+.pull-right {
+  float: right;
+}
+.box-shadow {
+  box-shadow: 0 10px 20px 0 rgba(198, 201, 210, 0.25) !important;
+
+}

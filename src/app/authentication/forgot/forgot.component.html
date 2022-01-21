@@ -1,0 +1,40 @@
+<div fxLayout="row" class="maincontainer" fxLayoutAlign="center center">
+    <div fxFlex="1 1 40%" fxLayout="column" fxLayoutGap="20px">
+        <mat-card-title fxLayoutAlign="center center">Food-Tiff</mat-card-title>
+
+        <mat-card fxLayout="column" class="outline">
+            <button mat-button fxFlexAlign="start" color="primary" [routerLink]="['../signin']">
+                <mat-icon>chevron_left</mat-icon>
+                Back
+            </button>
+            <div class="subcontainer" fxLayout="column" fxLayoutGap="20px">
+                <mat-card-title fxLayoutAlign="center center">Forgot Password?</mat-card-title>
+                <p>
+                    Don't Worry. Resetting Your Password is easy. Just tell us
+                    the Mobile number you registered
+                </p>
+                <mat-card-content fxLayout="column">
+
+                    <form [formGroup]="forgotForm" fxLayout="column">
+                        <mat-form-field appearance="outline">
+                            <mat-icon matPrefix>phone</mat-icon>
+                            <mat-label>
+                                Mobile Number
+                            </mat-label>
+                            <input type="tel" fxFlexFill matInput placeholder="Enter your email"
+                                formControlName="mobileNumber" required>
+                            <mat-error *ngIf="hasError('mobileNumber','required')">Enter mobile number
+                            </mat-error>
+                            <mat-error *ngIf="hasError('mobileNumber','minlength')">Please enter valid mobile number</mat-error>
+                            <mat-error *ngIf="hasError('mobileNumber','maxlength')">Please enter valid mobile number</mat-error>
+                        </mat-form-field>
+                    </form>
+                    <button fxFlexFill mat-raised-button  class="primary-button" (click)="onSubmit()">
+                        Reset MyPassword
+                    </button>
+                </mat-card-content>
+            </div>
+        </mat-card>
+
+    </div>
+</div>

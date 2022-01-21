@@ -1,0 +1,100 @@
+<mat-card fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+  <mat-card-title fxFlexAlign="start">{{ pageTitle }}</mat-card-title>
+
+  <form [formGroup]="productsForm" fxFill>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start" style="margin-bottom: 15px">
+      <div fxFlex="15">
+        <app-file-upload (fileUpload)="onFileUpload($event)" [imageSrc]="
+            productsForm.get('image')?.value ??
+            'assets/images/image-placeholder.jpg'
+          "></app-file-upload>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
+        <mat-form-field appearance="outline" fxFlexFill>
+          <mat-label>Calories</mat-label>
+          <input matInput type="number" formControlName="calories" required [readonly]="isReadOnlyMode" />
+          <mat-error *ngIf="hasError('calories', 'required')">Calories Required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlexFill>
+          <mat-label>Allergy Info</mat-label>
+          <textarea matInput formControlName="allergyInfo" required [readonly]="isReadOnlyMode"></textarea>
+          <mat-error *ngIf="hasError('allergyInfo', 'required')">Allergy Info Required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start">
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>Product Name</mat-label>
+        <input matInput formControlName="name" required [readonly]="isReadOnlyMode" />
+        <mat-error *ngIf="hasError('name', 'required')">Please Enter product name</mat-error>
+        <mat-error *ngIf="hasError('name', 'minLength')">Name must contain atleast 4 characters</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>Product Category</mat-label>
+        <mat-select required formControlName="category">
+          <mat-option *ngFor="let type of category" [value]="type">{{
+            type
+            }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="hasError('productCategory', 'required')">Please Enter product Category</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start">
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>Product Type</mat-label>
+        <mat-select required formControlName="productType">
+          <mat-option *ngFor="let type of productType" [value]="type">{{
+            type
+            }}</mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="hasError('prodType', 'required')">Product Type Info Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="45">
+        <mat-label>Product Price</mat-label>
+        <input matInput formControlName="price" required [readonly]="isReadOnlyMode" />
+        <mat-error *ngIf="hasError('price', 'required')">Please Enter product Price</mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" fxFlexFill>
+      <mat-label>Short Description</mat-label>
+      <textarea matInput formControlName="shortDesc" required [readonly]="isReadOnlyMode"></textarea>
+      <mat-error *ngIf="hasError('shortDesc', 'required')">Please Enter Description</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill>
+      <mat-label>Product Description</mat-label>
+      <textarea matInput formControlName="description" required [readonly]="isReadOnlyMode"></textarea>
+      <mat-error *ngIf="hasError('description', 'required')">Please Enter Description</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill>
+      <mat-label>Ingrediants</mat-label>
+      <mat-chip-list #chipList formControlName="ingrediants">
+        <mat-chip *ngFor="let item of productsForm.value.ingrediants" [selectable]="selectable" [removable]="removable"
+          (removed)="remove(item)">
+          {{ item }}
+          <button matChipRemove *ngIf="removable">
+            <mat-icon class="icon">cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input placeholder="New Ingrediants..." [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)" />
+      </mat-chip-list>
+      <mat-error *ngIf="hasError('allergyInfo', 'required')">Please provide Ingrediants Info</mat-error>
+    </mat-form-field>
+  </form>
+
+  <div class="button" fxFlexAlign="end">
+    <button mat-stroked-button color="primary" [routerLink]="[isUpdateMode ? '../../' : '../']">
+      CANCEL
+    </button>
+    <button *ngIf="!isReadOnlyMode" mat-flat-button color="primary" (click)="updateProduct()">
+      {{ productId ? "UPDATE" : "ADD" }}
+    </button>
+  </div>
+</mat-card>

@@ -1,0 +1,36 @@
+.main-container {
+  min-width: 100% !important ;
+  min-height: 100% !important;
+  .sub-container {
+    min-width: 100% !important ;
+    min-height: 100% !important;
+
+  }
+
+}
+mat-card {
+  // box-shadow: none !important;
+  box-shadow: 0 10px 20px 0 rgba(198, 201, 210, 0.25) !important;
+}
+mat-form-field {
+  padding: 0px;
+  line-height: 14px;
+  height: 50px;
+  margin-bottom: 10px;
+
+}
+mat-list-item {
+  border: 1px solid grey;
+  padding: 0;
+  border-radius:20px;
+}
+.message {
+  font-size: 13px;
+    font-weight: 500;
+    color: #676666;
+    text-align: center;
+}
+.mealPlaner {
+  width: inherit;
+  height: inherit;
+}

@@ -1,0 +1,28 @@
+<div fxLayout="row" class="maincontainer" fxLayoutAlign="center center">
+  <div fxFlex="1 1 40%" fxLayout="column" fxLayoutGap="20px">
+    <mat-card-title fxLayoutAlign="center center">Food-Tiff</mat-card-title>
+
+    <mat-card fxLayout="column" class="outline">
+      <button mat-button fxFlexAlign="start" color="primary" (click)="goBack()">
+        <mat-icon>chevron_left</mat-icon>
+        Back
+      </button>
+      <div class="subcontainer" fxLayout="column" fxLayoutGap="20px">
+        <mat-card-title fxLayoutAlign="center center">Enter Your Code</mat-card-title>
+        <p>
+          We sent a message with a code on your Mobile Number. Please enter it below.
+        </p>
+        <mat-card-content fxLayout="column" fxLayoutGap="20px">
+
+          <ng-otp-input #ngOtpInput [config]="config" (onInputChange)="onOtpChange($event)" fxLayoutAlign="center">
+          </ng-otp-input>
+          <button fxFlexFill mat-raised-button class="primary-button"
+            (click)="onSubmit()">Submit</button>
+
+        </mat-card-content>
+        <span fxLayoutAlign="center"> Do not receive a code? <a href="#" style="margin-left: 4px;">Resend</a> </span>
+      </div>
+    </mat-card>
+
+  </div>
+</div>

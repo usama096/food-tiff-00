@@ -1,0 +1,17 @@
+<h1 class="fb-18" mat-dialog-title>
+  {{ data.data.title }} {{ data.data.value }}
+</h1>
+<div mat-dialog-content>
+  {{ data.data.description }} {{ data.data.value }}
+  {{ data.firstName ?? data.data.name ?? data.order }}?
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+  <button
+    mat-flat-button
+    [color]="data.data.color?? 'primary'"
+    (click)="confirmItem()"
+  >
+    {{ data.data.button }}
+  </button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</div>

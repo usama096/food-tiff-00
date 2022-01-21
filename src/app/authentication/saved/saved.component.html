@@ -1,0 +1,22 @@
+<div fxLayout="row" class="maincontainer" fxLayoutAlign="center center">
+    <div fxFlex="1 1 40%" fxLayout="column" fxLayoutGap="20px">
+        <mat-card-title fxLayoutAlign="center center">Food-Tiff</mat-card-title>
+
+        <mat-card fxLayout="column" class="outline">
+            <img src="assets/images/good.png" alt="" fxFlexAlign="center">
+            <div class="subcontainer" fxLayout="column" fxLayoutGap="20px">
+                <mat-card-title fxLayoutAlign="center center">Password Changed</mat-card-title>
+                <p>
+                    Your Password has been changed. Please check your email
+                </p>
+                <mat-card-content fxLayout="column" fxLayoutGap="20px">
+
+                    <button fxFlexFill mat-raised-button  class="primary-button" [routerLink]="['../signin']">Sign in
+                        Now</button>
+
+                </mat-card-content>
+            </div>
+        </mat-card>
+
+    </div>
+</div>

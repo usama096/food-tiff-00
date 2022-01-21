@@ -1,0 +1,44 @@
+<div class="main-container">
+<div fxLayout="row" fxLayoutAlign="space-between start">
+  <span class="fb-20 " fxFlex="60%" fxFlexAlign="center">Orders List</span>
+  <mat-form-field appearance="outline" fxFlex="40%">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" [min]="minDate" [formControl]="dateCtrl">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<button mat-flat-button routerLink="oba">Orders Report</button>
+
+<mat-button-toggle-group class="top-nav" mat-align-tabs="start" fxLayout="row">
+  <mat-button-toggle (click)="breakFastOrders()" checked> BreakFast</mat-button-toggle>
+  <mat-button-toggle (click)="lunchOrders()">Lunch</mat-button-toggle>
+  <mat-button-toggle (click)="dinnerOrders()">Dinner</mat-button-toggle>
+</mat-button-toggle-group>
+
+<mat-tab-group (selectedTabChange)="tabChanged($event)" class="matTabGroup">
+  <mat-tab label="Economy">
+    <ng-container [ngTemplateOutlet]="ordersList"></ng-container>
+  </mat-tab>
+  <mat-tab label="Executive">
+    <ng-container [ngTemplateOutlet]="ordersList"></ng-container>
+  </mat-tab>
+  <mat-tab label="Low Cal">
+    <ng-container [ngTemplateOutlet]="ordersList"></ng-container>
+  </mat-tab>
+  <ng-template #ordersList>
+    <mat-card routerLinkActive="active" routerLink={{orderList.orderId}} *ngFor="let orderList of orders">
+      <mat-card-title-group fxFlex="1 1 70%">
+        <mat-card-title>Order #{{orderList.orderId}}</mat-card-title>
+        <mat-card-subtitle fxLayout="row" fxLayoutAlign="start start">
+          <mat-icon>schedule</mat-icon>
+          <span> {{orderList.timing}}</span>
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content fxFlex="1 1 30%" fxLayoutAlign="end center">
+        <h2> {{orderList.price}} <span class="f-12">-/Rs</span> </h2>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</mat-tab-group>
+</div>

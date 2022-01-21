@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+
+div.main-container {
+  width: 100%;
+  height: 100%;
+}
+
+div.charts-container {
+  width: 100%;
+  // height: 40%;
+}
+
+div.charts {
+  width: 100%;
+  height: 98px;
+  margin-top: 20px;
+}
+
+div.list {
+  background-color: rgba(214, 16, 16, 0.5);
+  width: 100%;
+}
+
+mat-card.recent-bill {
+  padding: 20px;
+}
+
+div.dishes {
+  width: 100%;
+}
+
+mat-form-field {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+mat-card {
+  box-shadow: none !important;
+}
+
+mat-icon {
+  padding: 13px;
+  color: white;
+  border-radius: 5px;
+  height: 50px;
+  width: 50px;
+}
+.grey {
+  color: rgb(161, 159, 159);
+}
+.reservations {
+  width: 100%;
+  min-height: 100%;
+  border-top-left-radius: 20px;
+  padding: 12px;
+}
+mat-list-item {
+  border: 1px solid rgba(0, 0, 0, 0.288);
+  padding: 5px;
+  border-radius: 8px;
+}
+mat-card.reservations div {
+  margin: 5px;
+}
