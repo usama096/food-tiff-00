@@ -51,7 +51,7 @@ export class ProductEffects {
     return this.actions$.pipe(
       ofType(ProductAction.updateProduct),
       concatMap((action) => {
-        return this.productsService.updateProduct(action.product).pipe(
+        return this.productsService.updateProduct(action.product, action.id).pipe(
           map((response: any) => {
             return ProductAction.updateProductSuccess({ response })
           }),

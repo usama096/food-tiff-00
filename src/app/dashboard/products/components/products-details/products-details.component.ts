@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SpinnerService } from 'src/app/shared/spinner.service';
-import { ProductsResolved, Products } from '../../models/products';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
+import { ProductResolved, Product } from '../../models/products';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { ProductsService } from '../../services/products.service';
 })
 export class ProductsDetailsComponent implements OnInit {
   pageTitle = 'Product Details';
-  products!: Products;
+  products!: Product;
   imageWidth = 150;
   imageMargin = 2;
   errorMessage!: string;
@@ -31,13 +31,13 @@ export class ProductsDetailsComponent implements OnInit {
     this.route.data.subscribe((data) => {
       // this.spinner.spinner()
       console.log(data);
-      const resolvedData: ProductsResolved = data['resolvedData'];
+      const resolvedData: ProductResolved = data['resolvedData'];
       this.errorMessage = resolvedData.error;
       this.onProductRetrieved(resolvedData.products!);
     });
   }
 
-  onProductRetrieved(product: Products): void {
+  onProductRetrieved(product: Product): void {
     this.products = product;
     if (this.products) {
       this.pageTitle = `Product Details: ${this.products.name}`;

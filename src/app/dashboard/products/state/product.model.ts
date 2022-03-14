@@ -1,18 +1,19 @@
+import { Image } from "src/app/shared/models/image-model";
+
 export interface Product {
   id?: number,
   name: string ,
   description: string,
-  image: string,
+  imageId: string,
   price: number,
-  shortDesc: string,
-  productType: string,
+  shortDescription: string,
+  prodType: string,
   category: string,
-  ingrediants: string[],
+  ingredients: string,
   allergyInfo: string,
   calories: number
-  weight: string
-}
-export interface ProductResolved {
-  products: Product | null;
-  error?: any;
+  weight: string,
+  isAvailable:boolean,
+  sku: string;
+  image: Image
 }

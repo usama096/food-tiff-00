@@ -1,0 +1,116 @@
+<form
+[formGroup]="formGroup"
+fxLayout="column"
+fxLayoutAlign="start start"
+fxLayoutGap="20px"
+>
+<!-- <mat-form-field appearance="outline">
+  <mat-label>Plan Category</mat-label>
+  <mat-select formControlName="planCategory" required>
+    <mat-option>Plan Category</mat-option>
+    <mat-option *ngFor="let plan of planCategories" [value]="plan.code">
+      {{ plan.description }}
+    </mat-option>
+  </mat-select>
+  <mat-error
+    *ngIf="formGroup.get('planCategory')?.hasError('required')"
+    >Field is required</mat-error
+  >
+</mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Plan Type</mat-label>
+  <mat-select formControlName="planType" required>
+    <mat-option>Plan Type</mat-option>
+    <mat-option *ngFor="let plan of plansList" [value]="plan.code">
+      {{ plan.description }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="formGroup.controls['planType'].errors?.required"
+    >Field is required</mat-error
+  >
+</mat-form-field> -->
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px" fxFill>
+  <div fxFlex="45" fxLayoutGap="25px" fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>Plan Category</mat-label>
+      <mat-select formControlName="planCategory" required>
+        <mat-option>Plan Category</mat-option>
+        <mat-option *ngFor="let plan of planCategories" [value]="plan.code">
+          {{ plan.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="formGroup.get('planCategory')?.hasError('required')"
+        >Field is required</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Plan Type</mat-label>
+      <mat-select formControlName="planType" required>
+        <mat-option>Plan Type</mat-option>
+        <mat-option *ngFor="let plan of plansList" [value]="plan.code">
+          {{ plan.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formGroup.controls['planType'].errors?.required"
+        >Field is required</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>PerMeal Price</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Per Meal Price"
+        formControlName="perMealPrice"
+        required
+      />
+      <mat-error
+        *ngIf="formGroup.controls['perMealPrice'].errors?.required"
+        >Field is required</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div fxFlex="45">
+    <app-file-upload (fileUpload)="onUpload($event)" [imageSrc]="
+    imageSrc ??
+    'assets/images/image-placeholder.jpg'
+  "></app-file-upload>
+
+  </div>
+
+
+</div>
+
+<!-- <div fxLayout="row" fxLayoutAlign="space-between start" fxFill>
+  <mat-form-field appearance="outline" fxFlex="45">
+    <mat-label>PerMeal Price</mat-label>
+    <input
+      matInput
+      type="number"
+      placeholder="Per Meal Price"
+      formControlName="perMealPrice"
+      required
+    />
+    <mat-error
+      *ngIf="formGroup.controls['perMealPrice'].errors?.required"
+      >Field is required</mat-error
+    >
+  </mat-form-field>
+</div> -->
+<mat-form-field class="example-full-width" appearance="outline" fxFill>
+  <mat-label>Description</mat-label>
+  <textarea
+    type="text"
+    matInput
+    placeholder="Description"
+    formControlName="description"
+    [matTextareaAutosize]="true"
+    [matAutosizeMinRows]="10"
+    [matAutosizeMaxRows]="15"
+  ></textarea>
+  <mat-error *ngIf="formGroup.controls['description'].errors?.required"
+    >Field is required</mat-error
+  >
+</mat-form-field>
+</form>

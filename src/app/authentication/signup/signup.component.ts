@@ -1,9 +1,10 @@
+import { signUpSuccess } from './../state/auth.action';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignUpUser } from '../models/auth-model';
-import { SpinnerService } from 'src/app/shared/spinner.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { Store } from '@ngrx/store';
 import { signUp } from '../state/auth.action';
 import { AuthState } from '../state/auth.reducer';
@@ -19,6 +20,7 @@ export class SignupComponent implements OnInit {
   hide: boolean = true;
   hidee: boolean = true;
   signUpUser!: SignUpUser
+  pattern: string = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}';
 
   constructor(
     private fb: FormBuilder,
@@ -29,38 +31,40 @@ export class SignupComponent implements OnInit {
     private store: Store<AuthState>
   ) {
     this.signupForm = this.fb.group({
-      firstName: ['Ahmad', [Validators.required, Validators.minLength(4)]],
-      lastName: ['Dota', [Validators.required, Validators.minLength(4)]],
-      mobileNumber: ['03464001326', [Validators.required]],
-      email: ['ahmad26@gmail.com', [Validators.required, Validators.email]],
-      password: ['Ahmad#@26', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}')]],
+      firstName: ['', [Validators.required, Validators.minLength(4)]],
+      lastName: ['', [Validators.required, Validators.minLength(4)]],
+      mobileNumber: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern(this.pattern)]],
       confirmPassword: [''],
     }, { validator: this.passwordMatch.bind(this) })
 
   }
   ngOnInit(): void {
+    this.store.select((state: any) => state.auth).subscribe(res => {
+        if(!res.signUpUser){
+          return;
+        }
+        if (res.signUpUser) {
+          this.router.navigate(['../verify-otp'], { relativeTo: this.route, queryParams: {phoneNumber: res.signUpUser.phoneNumber,mode: 'signup' } },)
+        }
+      },
+    );
+
   }
   onSubmit(): void {
     let payload: SignUpUser = {
       firstName: this.signupForm.get('firstName')?.value,
       lastName: this.signupForm.get('lastName')?.value,
       email: this.signupForm.get('email')?.value,
-      mobileNumber: this.signupForm.get('mobileNumber')?.value,
+      phoneNumber: this.signupForm.get('mobileNumber')?.value,
       password: this.signupForm.get('password')?.value,
-      userType: 'CUSTOMER'
     }
     if (!this.signupForm.valid) {
       this.signupForm.markAllAsTouched()
       return
     }
     this.store.dispatch(signUp({ payload }))
-    this.store.select((state: any) => state.auth.errorMessage).subscribe(
-      (res: any) => {
-        if (res && res.status === 200) {
-          this.router.navigate(['../verify-otp'], { relativeTo: this.route, queryParams: { mobileNumber: payload.mobileNumber, mode: 'signup' } },)
-        }
-      },
-    );
 
     // this.spinnerService.spinnerShow()
     // let data: SignUpUser = {

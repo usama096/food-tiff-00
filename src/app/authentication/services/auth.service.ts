@@ -13,20 +13,20 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signUpUser(user: SignUpUser) {
-    return this.http.post<SignUpUser>(`${this.url}/auth/signup/NF124`, user)
+    return this.http.post<SignUpUser>(`${this.url}/auth/register`, user)
   }
-  signInUser(mobileNumber: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.url}/auth/signin`, { mobileNumber, password })
+  signInUser(phoneNumber: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.url}/auth/login`, { phoneNumber, password })
   }
-  getUser() {
-    const url = `${this.url}/user/getUser`;
+  getUser(id: number) {
+    const url = `${this.url}/users/${id}`;
     return this.http.get(url)
       .pipe(
         tap((data: any) => data)
       )
   }
   forgotPassword(val: any): Observable<any> {
-    return this.http.post<any>(`${this.url}/auth/forgot-password-mobile`, val)
+    return this.http.post<any>(`${this.url}/auth/forgot-password`, val)
   }
   otp(otp: string, mobileNumber: string): Observable<any> {
     return this.http.post<any>(`${this.url}/auth/verify-otp`, { otp, mobileNumber })

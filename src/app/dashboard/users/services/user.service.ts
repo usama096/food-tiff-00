@@ -1,63 +1,58 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap, } from 'rxjs/operators';
-import { Users } from '../models/users-model';
+import { environment } from 'src/environments/environment';
+import { User } from '../models/users-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private usersUrl = 'dashboard/users';
+  private usersUrl = `${environment.apiUrl}/users`;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+   }
 
-  getUsers(): Observable<Users[]> {
-    return this.http.get<Users[]>(this.usersUrl)
-      .pipe(
-        tap((data: any) => console.log(JSON.stringify(data))),
-      );
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.usersUrl)
   }
 
-  getUser(id: number): Observable<Users> {
+  getUser(id: number): Observable<User> {
     if (!id) {
       return of(this.initializeUser());
     }
     const url = `${this.usersUrl}/${id}`;
-    return this.http.get<Users>(url)
-      .pipe(
-        tap((data: any) => console.log('getUser: ' + JSON.stringify(data))),
-      );
+    return this.http.get<User>(url)
   }
 
-  createUser(users: Users): Observable<Users> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Users>(this.usersUrl, users, { headers })
-      .pipe(
-        tap(data => console.log('User Created: ' + JSON.stringify(data))),
-      );
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(this.usersUrl, user)
   }
 
-  deleteUser(id: number): Observable<Users> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  deleteUser(id: number): Observable<User> {
     const url = `${this.usersUrl}/${id}`;
-    return this.http.delete<Users>(url, { headers })
+    return this.http.delete<User>(url)
+  }
+  updateUser(user: User, id: number): Observable<User> {
+    const url = `${this.usersUrl}/${user.id}`;
+    return this.http.patch<User>(url, user)
       .pipe(
-        tap(data => console.log("Deleted User Number: " + id)),
+        tap(() => console.log('updateUser: ' + user.id)),
+        map(() => user),
       );
   }
-  updateUser(users: Users): Observable<Users> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.usersUrl}/${users.id}`;
-    return this.http.put<Users>(url, users, { headers })
-      .pipe(
-        tap(() => console.log('updateUser: ' + users.id)),
-        map(() => users),
-      );
+  searchUserBy(userType?: string, propertyName?: string, value?: string, activeOnly?: boolean): Observable<User> {
+    let params = new HttpParams();
+    params = params.append('userType', userType!);
+    params = params.append('propertyName', propertyName!);
+    params = params.append('value', value!);
+    params = params.append('activeOnly', activeOnly!);
+    return this.http.get<User>(`${this.usersUrl}/searchBy`, { params });
   }
 
-  private initializeUser(): Users {
+  private initializeUser(): User {
     return {
       id: null!,
       firstName: null!,
@@ -66,8 +61,7 @@ export class UsersService {
       mobileNumber: null!,
       isActive: null!,
       userType: null!,
-      profileImgUrl: null!
-
+      image: null!
     };
   }
 }

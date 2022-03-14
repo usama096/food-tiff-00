@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Products } from './models/products';
+import { Product } from './models/products';
 
 
 
@@ -10,7 +10,7 @@ import { Products } from './models/products';
 })
 export class ProductsComponent implements OnInit {
   constructor() { }
-  
+
 
   ngOnInit(): void {
   }

@@ -1,75 +1,107 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, tap, } from 'rxjs/operators';
-import { Plans } from '../models/plans-model';
+import { tap} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { Plan } from '../models/plan-model';
+import { PlanProducts } from '../models/plan-products-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlansService {
-  private plansUrl = 'dashboard/plans';
+  private plansUrl = `${environment.apiUrl}/plans`;
 
   constructor(private http: HttpClient) { }
 
-  getPlans(): Observable<Plans[]> {
-    return this.http.get<Plans[]>(this.plansUrl)
+  getPlans(): Observable<Plan[]> {
+    return this.http.get<Plan[]>(`${this.plansUrl}`)
       .pipe(
         tap((data: any) => data),
       );
   }
+  getPlan(id: number): Observable<Plan> {
 
-  getPlan(id: number): Observable<Plans> {
     if (!id) {
       return of(this.initializePlan());
     }
-    const url = `${this.plansUrl}/${id}`;
-    return this.http.get<Plans>(url)
+    return this.http.get<Plan>(`${this.plansUrl}/${id}`)
+      .pipe(
+        tap((data: any) => data),
+      );
+  }
+  getPlanProducts(id: number, startServeDate?: string, endServeDate?: string, isPublished?: boolean): Observable<PlanProducts[]> {
+    let params = new HttpParams();
+    if (startServeDate)
+      params = params.append('startServeDate', startServeDate);
+    if (endServeDate)
+      params = params.append('endServeDate', endServeDate);
+    if (isPublished)
+      params = params.append('publishedOnly', isPublished);
+
+    return this.http.get<PlanProducts>(`${this.plansUrl}/${id}/products`, { params })
       .pipe(
         tap((data: any) => data),
       );
   }
 
-  createPlan(plans: Plans): Observable<Plans> {
-    debugger
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Plans>(this.plansUrl, plans, { headers })
+  createPlan(plans: Plan): Observable<Plan> {
+
+    return this.http.post<Plan>(`${this.plansUrl}`, plans)
       .pipe(
         tap(data => data),
       );
   }
 
-  deletePlan(id: number): Observable<Plans> {
+  deletePlan(id: number): Observable<Plan> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.plansUrl}/${id}`;
-    return this.http.delete<Plans>(url, { headers })
+    return this.http.delete<Plan>(`${this.plansUrl}/${id}`, { headers })
       .pipe(
         tap(data => data),
       );
   }
-  updatePlan(plan: Plans): Observable<Plans> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.plansUrl}/${plan.id}/edit`;
-    return this.http.put<Plans>(url, plan, { headers })
+  updatePlan(plan: Plan): Observable<Plan> {
+    return this.http.patch<Plan>(`${this.plansUrl}/${plan.id}`, plan)
       .pipe(
         tap(() => console.log('updatePlan: ' + plan.id)),
-        map(() => plan),
+      );
+  }
+
+  getOnlyPiblishedPlans(): Observable<Plan[]> {
+    return this.http.get<Plan[]>(`${this.plansUrl}/publishedOnly`)
+      .pipe(
+        tap((data: any) => data),
+      );
+  }
+
+  createPlanProducts(planProducts: PlanProducts[]): Observable<PlanProducts[]> {
+    return this.http.post<PlanProducts[]>(`${this.plansUrl}/products`, {planProducts: planProducts},)
+      .pipe(
+        tap(data => data),
+      );
+  };
+  getTodaysPlanProducts(): Observable<PlanProducts[]> {
+    let params = new HttpParams();
+    let date = new Date().toISOString().split('T')[0];
+    let isPublished = true;
+      params = params.append('startServeDate', date);
+      params = params.append('endServeDate', date);
+      params = params.append('publishedOnly', isPublished);
+    return this.http.get<PlanProducts>(`${this.plansUrl}/products`, { params })
+      .pipe(
+        tap((data: any) => data),
       );
   }
 
 
-  private initializePlan(): Plans {
+  private initializePlan(): Plan {
     return {
       id: null!,
       planType: null!,
+      perMealPrice: null!,
+      description: null!,
+      isPublished: null!,
       planCategory: null!,
-      weekly_price: null!,
-      monthly_price: null!,
-      image: null,
-      action: null,
-      date: null!,
-      meals: null!
-
     };
   }
 }

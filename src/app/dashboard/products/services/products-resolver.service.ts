@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ProductsResolved } from '../models/products'
+import { ProductResolved } from '../models/products'
 import { ProductsService } from './products.service';
 @Injectable({
     providedIn: 'root'
 })
 
-export class ProductResolver implements Resolve<ProductsResolved>{
+export class ProductResolver implements Resolve<ProductResolved>{
 
     constructor(private productsService: ProductsService) { };
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductsResolved> {
-        const id = route.paramMap.get('id')
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductResolved> {
+        const id = route.paramMap.get('id') ;
         if (id) {
             if (isNaN(+id!)) {
                 const message = `Product id was not a number: ${id}`;
@@ -32,7 +32,6 @@ export class ProductResolver implements Resolve<ProductsResolved>{
         }
         else {
             const message = `id is null`;
-            console.error(message);
             return of({ products: null, error: message })
         }
     }

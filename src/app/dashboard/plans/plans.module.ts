@@ -12,13 +12,18 @@ import { ProductData } from 'src/app/shared/product-data';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MealPlannerComponent } from './components/meal-planner/meal-planner.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { SelectMealComponent } from './components/meal-planner/select-meal/select-meal.component';
+import { FoodPlanComponent } from './components/plans-edit/food-plan/food-plan.component';
 @NgModule({
   declarations: [
     PlansComponent,
     PlansListComponent,
     PlansEditComponent,
     PlansViewComponent,
-    MealPlannerComponent
+    MealPlannerComponent,
+    SelectMealComponent,
+    FoodPlanComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +32,8 @@ import { MealPlannerComponent } from './components/meal-planner/meal-planner.com
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    SharedModule
   ],
   providers: [ProductData]
 })

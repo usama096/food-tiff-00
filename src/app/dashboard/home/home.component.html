@@ -10,7 +10,7 @@
         <h2>Sales Overview</h2>
         <ngx-charts-bar-vertical [view]="[650, 200]" [results]="saleData" [xAxisLabel]="'Orders'"
           [legendTitle]="'Product Sale'" [yAxisLabel]="'Sale'" [legend]="true" [showXAxisLabel]="true"
-          [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
+          [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true">
         </ngx-charts-bar-vertical>
       </mat-card>
       <mat-card style="background-color: #F29B62;
@@ -22,9 +22,9 @@
           </div>
           <h3 class="fb-14" fxFlex="30" fxFlexAlign="start">#FT10857</h3>
         </div>
-        <div fxFlex="70" fxFlex="30" fxFlexFill fxLayout="row" fxLayoutAlign="start start"  *ngFor="let order of orders">
+        <div fxFlex="70" fxFlex="30" fxFlexFill fxLayout="row" fxLayoutAlign="start start" *ngFor="let order of orders">
           <h3 class="f-14 mb-0" fxFlex="80" fxFlexAlign="start">
-           {{order.orderName}}
+            {{order.orderName}}
           </h3>
           <h3 class="f-14 mb-0" fxFlex="20" fxFlexAlign="start">{{order.price}}/Rs.</h3>
         </div>
@@ -86,7 +86,8 @@
             </mat-select>
           </mat-form-field> -->
         </div>
-        <div fxFlex="70" fxFlexFill fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px" *ngFor="let dish of dishes">
+        <div fxFlex="70" fxFlexFill fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px"
+          *ngFor="let dish of dishes">
           <div><img [src]="dish.image" /></div>
           <div fxFlex="70" fxLayout="column" fxLayoutAlign="start start" style="padding: 10px;">
             <h3 class="fb-14" style="line-height:0px">{{dish.name}}</h3>
@@ -100,7 +101,8 @@
       </mat-card>
       <mat-card fxFlex="50" fxFlexFill fxLayout="column">
         <h2>Employee Schedual</h2>
-        <div  fxFlex="70" fxFlexFill fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px" *ngFor="let employee of employees">
+        <div fxFlex="70" fxFlexFill fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px"
+          *ngFor="let employee of employees">
           <img [src]="employee.image" alt="food" />
           <div fxFlex="70" fxLayout="column" fxLayoutAlign="start start" style="padding: 10px;">
             <h3 class="fb-14" style="line-height: 0px">{{employee.name}}</h3>
@@ -125,7 +127,7 @@
     <div fxLayout="row" fxLayoutAlign="start center">
       <span class="f-12" fxFlex="15" fxLayoutAlign="start">&#9679;</span>
       <mat-list-item fxFlex="85">
-        <div fxFlex="100" fxLayout="column"  fxLayoutGap="10px">
+        <div fxFlex="100" fxLayout="column" fxLayoutGap="10px">
           <span fxFlex="100%"> <b>Harold Nelson + 1</b></span>
           <div fxLayout="row" fxLayoutAlign="space-evenly center" fxFlex="100">
             <div fxFlex="50">

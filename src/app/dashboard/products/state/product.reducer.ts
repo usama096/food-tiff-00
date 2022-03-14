@@ -1,4 +1,3 @@
-import * as ProductModel from './product.model';
 import { createReducer, on } from '@ngrx/store';
 import {
   addProduct,
@@ -17,20 +16,26 @@ import {
   updateProductFailure,
   updateProductSuccess,
 } from './product.action';
+import { Product } from '../models/products';
 
 export interface ProductState {
-  products: ProductModel.Product[] | null;
-  product: ProductModel.Product | null;
+  products: Product[] | null;
+  product: Product | null;
   id: number | null;
   errorMesage: string | null;
   response: any;
+  addSuccess: boolean | null;
+  updateSuccess: boolean | null;
+
 }
 export const initialState: ProductState = {
   products: null,
-  product:null,
+  product: null,
   id: null,
   errorMesage: null,
   response: null,
+  addSuccess: null,
+  updateSuccess: null,
 };
 
 export const productReducer = createReducer<ProductState>(
@@ -38,6 +43,10 @@ export const productReducer = createReducer<ProductState>(
   on(getProducts, (state): ProductState => {
     return {
       ...state,
+      addSuccess: null,
+      updateSuccess: null,
+      id: null,
+      product: null
     };
   }),
   on(getProductsSuccess, (state, action): ProductState => {
@@ -50,13 +59,13 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       errorMesage: action.error,
-      products: null
+      products: null,
     };
   }),
-  on(getProductById, (state): ProductState => {
+  on(getProductById, (state, action): ProductState => {
     return {
       ...state,
-      id: state.id,
+      id: action.id,
     };
   }),
   on(getProductByIdSuccess, (state, action): ProductState => {
@@ -69,13 +78,15 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       errorMesage: action.error,
-      product: null
+      product: null,
+
     };
   }),
-  on(updateProduct, (state): ProductState => {
+  on(updateProduct, (state, action): ProductState => {
     return {
       ...state,
-      id: state.id,
+      product: action.product,
+      id: action.id
     };
   }),
 
@@ -83,12 +94,17 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       product: action.response,
+      id: state.id,
+      updateSuccess: true,
+
     };
   }),
   on(updateProductFailure, (state, action): ProductState => {
     return {
       ...state,
       errorMesage: action.error,
+      updateSuccess: false,
+
     };
   }),
   on(deleteProduct, (state): ProductState => {
@@ -120,12 +136,14 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       product: action.response,
+      addSuccess: true,
     };
   }),
   on(addProductFailure, (state, action): ProductState => {
     return {
       ...state,
       errorMesage: action.error,
+      addSuccess: false,
     };
   })
 );

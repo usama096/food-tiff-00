@@ -16,24 +16,19 @@ export class UserResolver implements Resolve<UsersResolved>{
         const id = route.paramMap.get('id')
         if (id) {
             if (isNaN(+id!)) {
-                const message = `Product id was not a number: ${id}`;
-                console.error(message);
-                return of({ users: null, error: message })
+                return of({ user: null })
             }
             return this.userService.getUser(+id)
                 .pipe(
-                    map(product => ({ users: product })),
+                    map(product => ({ user: product })),
                     catchError(error => {
                         const message = `Retrivel error: ${error}`;
-                        console.error(message);
-                        return of({ users: null, error: message })
+                        return of({ user: null, error: message })
                     })
                 )
         }
         else {
-            const message = `id is null`;
-            console.error(message);
-            return of({ users: null, error: message })
+            return of({ user: null})
         }
     }
 

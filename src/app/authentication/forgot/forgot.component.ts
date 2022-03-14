@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { SpinnerService } from 'src/app/shared/spinner.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { AuthService } from '../services/auth.service';
 import { forgotPassword } from '../state/auth.action';
 @Component({
@@ -43,16 +43,21 @@ export class ForgotComponent implements OnInit {
       this.forgotForm.markAllAsTouched()
     }
     let payload = {
-      mobileNumber: this.forgotForm.get('mobileNumber')?.value
+      phoneNumber: this.forgotForm.get('mobileNumber')?.value
     }
-    if (payload.mobileNumber.length < 11 || payload.mobileNumber.length > 11) {
+    if (payload.phoneNumber.length < 11 || payload.phoneNumber.length > 11) {
       return;
     }
 
     this.store.dispatch(forgotPassword({ payload }));
-    this.store.select((state: any) => state.auth.authResponse).subscribe(
+    this.store.select((state: any) => state.auth).subscribe(
       (res) => {
-       this.router.navigate(['../verify-otp'], { relativeTo: this.route, queryParams: { mobileNumber: payload.mobileNumber, mode: 'reset' } })
+        if (!res) {
+          return;
+        }
+        if (res.forgot) {
+          this.router.navigate(['../verify-otp'], { relativeTo: this.route, queryParams: { phoneNumber: payload.phoneNumber, mode: 'reset' } })
+        }
 
       }
     )

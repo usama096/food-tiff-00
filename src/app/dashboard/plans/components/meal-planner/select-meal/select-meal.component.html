@@ -1,0 +1,20 @@
+<mat-form-field appearance="outline">
+<mat-select [formControl]="formCtrl" (selectionChange)="onProductChange($event)">
+  <mat-select-trigger>{{selectTriggerName? selectTriggerName: mealName }}</mat-select-trigger>
+  <mat-option>--None--</mat-option>
+  <mat-option *ngFor="let food of meals" [value]="food.id" style="line-height: 12px">
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px">
+      <div fxFlex="none">
+        <img [src]="food.image?.downloadUrl" [title]="food.name" [style.width.px]="imageWidth"
+          [style.margin.px]="imageMargin" />
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="4px">
+        <div class="fb-14" fxFlex="none">{{ food.name }}</div>
+        <div class="f-12 color-grey" fxFlex="none">
+          {{ food.description }}
+        </div>
+      </div>
+    </div>
+  </mat-option>
+</mat-select>
+</mat-form-field>

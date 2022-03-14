@@ -11,7 +11,9 @@ export interface AuthState {
   token: string | null;
   otp: AuthModel.Otp | null;
   forgot: AuthModel.Forgot |null;
-  reset: AuthModel.Reset | null
+  reset: AuthModel.Reset | null;
+  signupSuccess: boolean | null;
+
 
 }
 export const initialState: AuthState = {
@@ -24,6 +26,8 @@ export const initialState: AuthState = {
   otp: null,
   forgot: null,
   reset: null,
+  signupSuccess: null,
+
 
 }
 export const authReducer = createReducer<AuthState>(
@@ -37,12 +41,11 @@ export const authReducer = createReducer<AuthState>(
     return {
       ...state,
       isAuthenticated: true,
-      authResponse: action.response,
+      signInUser: action.response,
       token: action.response.accessToken,
     }
   }),
   on(signInFailure, (state, action): AuthState => {
-    console.log('Failure Response is: ', action.error);
     return {
       ...state,
       isAuthenticated: false,
@@ -59,13 +62,16 @@ export const authReducer = createReducer<AuthState>(
   on(signUpSuccess, (state, action): AuthState => {
     return {
       ...state,
-      authResponse: action.type
+      signUpUser: action.response,
+      signupSuccess: true,
     }
   }),
   on(signUpFailure, (state, action): AuthState => {
     return {
       ...state,
-      errorMessage: action.error
+      errorMessage: action.error,
+      signupSuccess: false,
+
     }
   }),
   on(signOut, (state): AuthState => {
@@ -83,7 +89,7 @@ export const authReducer = createReducer<AuthState>(
   on(otpSuccess, (state, action): AuthState => {
     return {
       ...state,
-      authResponse: action.response
+      otp: action.response
     }
   }),
   on(otpFailure, (state, action): AuthState => {
@@ -101,7 +107,7 @@ export const authReducer = createReducer<AuthState>(
   on(forgotPasswordSuccess, (state, action): AuthState => {
     return {
       ...state,
-      authResponse: action.response
+      forgot: action.response
     }
   }),
   on(forgotPasswordFailure, (state, action): AuthState => {
@@ -120,7 +126,7 @@ export const authReducer = createReducer<AuthState>(
     debugger
     return {
       ...state,
-      authResponse: action.response
+      reset: action.response
     }
   }),
   on(resetPasswordFailure, (state, action): AuthState => {

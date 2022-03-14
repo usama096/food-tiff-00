@@ -1,56 +1,45 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
-import { SharedService } from 'src/app/shared/shared.service';
-import { SpinnerService } from 'src/app/shared/spinner.service';
-import { Products } from '../../models/products';
-import { ProductsService } from '../../services/products.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
+import { Product } from '../../models/products';
 import { deleteProduct, getProducts } from '../../state/product.action';
+import { ProductState } from '../../state/product.reducer';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
   title = "Products List"
   imageWidth = 50;
   imageMargin = 2;
   search = new FormControl();
   errorMessage!: string
-  products!: Products;
+  products!: Product;
+  prodState!: ProductState;
+  prodStateSub!: Subscription;
   displayedColumns: string[] = ['id', 'name', 'description', 'image', 'action'];
-  dataSource: Products[] = [];
+  dataSource: Product[] = [];
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private productsService: ProductsService,
-    private spinner: SpinnerService,
     public shared: SharedService,
     private store: Store,
   ) {
     this.store.dispatch(getProducts());
-    this.store.select((state: any) => state.product).subscribe(
-       (res) => {
-        console.log(res)
-        if(res.products){
-          return this.dataSource = res.products;
+    this.prodStateSub = this.store.select((state: any) => state.product).subscribe(
+      (res) => {
+        if (!res) {
+          return;
         }
-        if(res.error) {
-          console.log('error is: ',res.error)
-          return res.error
-        }
+        this.prodState = res;
+        this.dataSource = res.products;
       }
     )
-
-    // this.spinner.spinnerShow()
-    // this.dataSource = this.productsService.getProducts();
-    // this.productsService.getProducts().subscribe((data: any) => {
-    //   this.dataSource = data;
-    // })
 
   }
   addProduct(): void {
@@ -59,7 +48,12 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  deleteProduct(product: Products): void {
+
+  ngOnDestroy(): void {
+    this.prodStateSub.unsubscribe();
+  }
+
+  deleteProduct(product: Product): void {
     let data = {
       value: product.name,
       title: 'Delete',
@@ -71,24 +65,9 @@ export class ProductsListComponent implements OnInit {
       const id = data.id
       if (res === true) {
         this.store.dispatch(deleteProduct({ id }));
-        this.store.select((state: any) => state.product.response).subscribe(
-          (resp) => {
-            this.store.dispatch(getProducts());
-          }
-        )
-      }
-      // console.log("Response from confirmation Component is: ", res)
-      // if(res === true) {
-      //   this.productsService.deleteProduct(+product.id!).subscribe({
-      //     next: () => {
-      //       this.productsService.getProducts().subscribe((data: any) => {
-      //         this.dataSource = data
-      //       })
-      //     },
-      //     error: err => console.log(err)
+        this.store.dispatch(getProducts());
 
-      //   });
-      // }
+      }
     });
   }
 }

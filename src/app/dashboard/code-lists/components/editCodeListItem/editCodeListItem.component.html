@@ -1,0 +1,36 @@
+<div >
+<h2>{{ title }}</h2>
+<form [formGroup]="editCodeList" fxLayout="column">
+
+  <mat-form-field appearance="legacy">
+    <mat-label>Code List</mat-label>
+    <input fxFlexFill matInput placeholder="Code List Name" formControlName="codeListName" readonly required />
+  </mat-form-field>
+
+  <mat-form-field appearance="legacy">
+    <mat-label>Code</mat-label>
+    <input fxFlexFill matInput placeholder="Code" formControlName="code" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="legacy">
+    <mat-label> Description </mat-label>
+    <input fxFlexFill matInput placeholder="Description" formControlName="description" required />
+  </mat-form-field>
+
+    <mat-label> Is Active </mat-label>
+    <mat-slide-toggle formControlName="isActive" color="primary"></mat-slide-toggle>
+  <mat-form-field appearance="legacy">
+    <mat-label>Language</mat-label>
+    <input fxFlexFill matInput placeholder="Language" formControlName="lang"/>
+  </mat-form-field>
+
+  <mat-form-field appearance="legacy">
+    <mat-label> Sort Order </mat-label>
+    <input fxFlexFill type="number" matInput placeholder="Sort Order" formControlName="sortOrder" />
+  </mat-form-field>
+</form>
+<div fxLayoutAlign="end end">
+  <button mat-flat-button color="primary" (click)="addorUpdateCodeListItem()">{{edit}}</button>
+  <button mat-button mat-dialog-close  color="primary">Cancel</button>
+</div>
+</div>

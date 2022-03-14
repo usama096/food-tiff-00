@@ -18,7 +18,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthAction.signIn),
       concatMap((action) => {
-        return this.authService.signInUser(action.payload.mobileNumber, action.payload.password).pipe(
+        return this.authService.signInUser(action.payload.phoneNumber, action.payload.password).pipe(
           map((response) => {
             return AuthAction.signInSuccess({ response });
           }),
@@ -51,7 +51,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthAction.otp),
       concatMap((action) => {
-        return this.authService.otp(action.payload.otp, action.payload.mobileNumber).pipe(
+        return this.authService.otp(action.payload.otp, action.payload.phoneNumber).pipe(
           map((response: any) => {
             return AuthAction.otpSuccess({ response })
           }),

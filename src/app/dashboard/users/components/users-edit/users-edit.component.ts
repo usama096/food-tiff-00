@@ -1,54 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { Users, UsersResolved } from '../../models/users-model';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { CodelistItem } from 'src/app/shared/models/codelists-model';
+import { RefDataService } from 'src/app/shared/services/ref-data.service';
+import { User, UsersResolved } from '../../models/users-model';
 import { UsersService } from '../../services/user.service';
+import { addUser, updateUser } from '../../state/user.action';
+import { UserState } from '../../state/user.reducer';
+import { FileUploadService } from 'src/app/shared/services/file-upload.service';
 
 @Component({
   selector: 'app-users-edit',
   templateUrl: './users-edit.component.html',
   styleUrls: ['./users-edit.component.scss'],
 })
-export class UsersEditComponent implements OnInit {
+export class UsersEditComponent implements OnInit, OnDestroy {
   pageTitle = 'Add new User';
   usersForm!: FormGroup;
   isReadOnlyMode: boolean = false;
-  isUpdateMode: boolean = false;
+  isUpdateMode!: boolean;
   userId!: number;
-  users!: Users;
+  user!: User;
   errorMessage!: string;
   isActive: boolean = false;
   fileName!: string;
-  userType = ['Customer', 'Admin', 'Delivery Boy'];
-
+  userState!: UserState;
+  userStateSub!: Subscription;
+  userType: CodelistItem[] = [];
+  imageSrc!: string |null | undefined;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private userService: UsersService,
-    private router: Router
+    private router: Router,
+    private refDataService: RefDataService,
+    private store: Store,
+    private fileUploadService: FileUploadService,
   ) {
+
     this.usersForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      mobileNumber: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]],
       id: [],
       isActive: true,
+      imageId: [''],
       userType: ['', [Validators.required]],
-      profileImgUrl: ['', [Validators.required]],
     });
     this.userService.getUsers().subscribe((data: any) => {
-      this.users = data;
+      this.user = data;
     });
   }
 
   ngOnInit(): void {
+    this.userStateSub = this.store.select((state: any) => state.user).subscribe(
+      (res) => {
+        if (!res) {
+          return;
+        }
+        this.userState = res;
+      }
+    )
+
+    this.refDataService.getUserType().subscribe((res) => {
+      this.userType = res.filter(user =>{
+        return user.code !== 'CU' && user.code !== 'SA';
+      });
+    })
     this.route.data.subscribe((data) => {
       const resolvedData: UsersResolved = data['resolvedData'];
       this.errorMessage = resolvedData.error;
-      if (resolvedData.users) this.onProductRetrieved(resolvedData.users);
+      if (resolvedData.user) this.onProductRetrieved(resolvedData.user);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userStateSub.unsubscribe();
   }
 
   hasError(controlName: string, validationType: string): boolean {
@@ -59,37 +89,36 @@ export class UsersEditComponent implements OnInit {
     return result;
   }
 
-  onFileUpload(event: any) {
+  onFileUpload(event: any): void {
     if (event.target.files && event.target.files[0]) {
       const file: File = event.target.files[0];
       if (file) {
         this.fileName = file.name;
         const formData = new FormData();
         formData.append('file', file, file.name);
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.usersForm
-            .get('profileImgUrl')
-            ?.setValue(reader.result as string);
-        };
-        reader.readAsDataURL(file);
+        this.fileUploadService.uploadFile(formData).subscribe((res) => {
+          this.imageSrc = res.downloadUrl;
+          this.usersForm.get('imageId')?.setValue(res.id);
+        })
       }
     }
   }
 
-  onProductRetrieved(user: Users) {
-    this.users = user;
-    this.usersForm.patchValue({ ...this.users });
+
+  onProductRetrieved(user: User) {
+    this.user = user;
+    this.usersForm.patchValue({ ...this.user });
+    this.imageSrc = user.image?.downloadUrl;
 
     const id = this.route.snapshot.paramMap.get('id');
-    if (!this.users) {
+    if (!this.user) {
       this.pageTitle = 'No User Found';
     } else {
       if (!id) {
         this.pageTitle = 'Add New User';
       } else {
         this.userId = +id!;
-        this.pageTitle = `${this.users.firstName}`;
+        this.pageTitle = this.user.firstName;
       }
     }
     const url = this.router.url;
@@ -102,26 +131,18 @@ export class UsersEditComponent implements OnInit {
   }
 
   reset(): void {
-    this.users = null!;
+    this.user = null!;
   }
 
   addUser() {
-    this.users = this.usersForm.value;
+    let user = { ...this.usersForm.value };
+    let id = this.userId;
     if (!this.userId) {
-      this.userService.createUser(this.users).subscribe({
-        next: () => {
-          this.reset();
-          this.router.navigate(['../'], { relativeTo: this.route });
-        },
-        error: (err) => (this.errorMessage = err),
-      });
+      this.store.dispatch(addUser({ user }));
+      this.router.navigate(['../'], { relativeTo: this.route });
     } else {
-      this.userService.updateUser(this.users).subscribe({
-        next: () => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        },
-        error: (err) => (this.errorMessage = err),
-      });
+      this.store.dispatch(updateUser({ user,id }));
+      this.router.navigate(['../../'], { relativeTo: this.route });
     }
   }
 }

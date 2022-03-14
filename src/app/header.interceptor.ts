@@ -16,9 +16,8 @@ export class HeaderInterceptor implements HttpInterceptor {
     const accessToken = localStorage.getItem('accessToken')!;
     return next.handle(request.clone({
       setHeaders: {
-        'Authentication': 'Bearer ' + accessToken,
-        'Content-Type': 'Application/json',
-     }
+        'Authorization': 'Bearer ' + accessToken,
+     },
     }));
   }
 }

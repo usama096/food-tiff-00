@@ -1,18 +1,25 @@
-export interface Products {
+import { Image } from "src/app/shared/models/image-model";
+
+export interface Product {
   id?: number,
-  name: string ,
+  name: string,
   description: string,
-  image: string,
+  imageId?: string,
   price: number,
-  shortDesc: string,
-  productType: string,
+  shortDescription: string,
+  prodType: string,
   category: string,
-  ingrediants: string[],
+  ingredients: string,
   allergyInfo: string,
   calories: number
-  weight: string
+  weight: string,
+  isAvailable: boolean,
+  sku: string,
+  image?:Image
 }
-export interface ProductsResolved {
-  products: Products | null;
+
+
+export interface ProductResolved {
+  products: Product | null;
   error?: any;
 }

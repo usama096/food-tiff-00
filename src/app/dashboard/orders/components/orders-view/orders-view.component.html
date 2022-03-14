@@ -48,6 +48,24 @@
   </div>
 
   <div fxLayout="column" fxFlexAlign="start center" fxLayoutGap="15px">
+    <mat-divider></mat-divider>
+    <div class="default fb-12">
+
+      <div fxFlex="20%">Image</div>
+      <div fxFlex="20%" fxFlexAlign="center">Name</div>
+      <div fxFlex="20%" fxFlexAlign="center">
+        Quantity
+      </div>
+      <div fxFlex="20%" class="fb-15" fxFlexAlign="end">
+        Date
+      </div>
+      <div fxFlex="20%" class="fb-15" fxLayoutAlign="center">
+       Action
+      </div>
+
+    </div>
+    <mat-divider></mat-divider>
+
     <mat-accordion>
       <mat-expansion-panel hideToggle class="details" fxLayout="column" fxLayoutAlign="start end"
         *ngFor="let order of orders">
@@ -55,10 +73,10 @@
           <mat-panel-title>
             <div fxFlex="20%"><img [src]="order.image" alt="cake" /></div>
             <div fxFlex="20%" fxFlexAlign="center">{{ order.name }}</div>
-            <div fxFlex="15%" class="f-16" fxFlexAlign="center">
+            <div fxFlex="20%" class="f-16" fxFlexAlign="center">
               x {{ order.number_of_orders }}
             </div>
-            <div fxFlex="25%" class="fb-15" fxFlexAlign="center">
+            <div fxFlex="20%" class="fb-15" fxFlexAlign="center">
               {{ date | date: "MMM d, y" }}
             </div>
             <div fxFlex="20%" fxLayoutAlign="end" fxFlexAlign="center">

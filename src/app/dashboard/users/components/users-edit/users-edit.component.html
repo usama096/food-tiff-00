@@ -4,7 +4,10 @@
   <form [formGroup]="usersForm" fxFill>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start" style="margin-bottom: 15px">
       <div fxFlex="15">
-        <app-file-upload (fileUpload)="onFileUpload($event)" [imageSrc]="usersForm.get('profileImgUrl')?.value">
+        <app-file-upload (fileUpload)="onFileUpload($event)"
+        [imageSrc]="imageSrc ??
+        'assets/images/image-placeholder.jpg'"
+        >
         </app-file-upload>
       </div>
       <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
@@ -16,7 +19,7 @@
         <mat-form-field appearance="outline" fxFlexFill>
           <mat-label>Last Name</mat-label>
           <input matInput formControlName="lastName" required [readonly]="isReadOnlyMode" />
-          <mat-error *ngIf="hasError('allergyInfo', 'required')">Last Name Required</mat-error>
+          <mat-error *ngIf="hasError('lastName', 'required')">Last Name Required</mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -24,9 +27,9 @@
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="end start">
       <mat-form-field appearance="outline" fxFlex="45">
         <mat-label>Mobile Number</mat-label>
-        <input matInput formControlName="mobileNumber" required [readonly]="isReadOnlyMode" />
-        <mat-error *ngIf="hasError('mobileNumber', 'required')">Mobile number is required</mat-error>
-        <mat-error *ngIf="hasError('mobileNumber', 'minLength')">Please enter 11 digits mobile number</mat-error>
+        <input matInput formControlName="phoneNumber" required [readonly]="isReadOnlyMode" />
+        <mat-error *ngIf="hasError('phoneNumber', 'required')">Mobile number is required</mat-error>
+        <mat-error *ngIf="hasError('phoneNumber', 'minLength')">Please enter 11 digits mobile number</mat-error>
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign="space-between start">
@@ -40,8 +43,8 @@
       <mat-form-field appearance="outline" fxFlex="45">
         <mat-label>User Type</mat-label>
         <mat-select formControlName="userType" name="User Type">
-          <mat-option *ngFor="let userType of userType" [value]="userType">
-            {{ userType }}
+          <mat-option *ngFor="let userType of userType" [value]="userType.code">
+            {{ userType.description }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="hasError('userType', 'required')">User Type is required</mat-error>

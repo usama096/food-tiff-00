@@ -1,11 +1,12 @@
+import { Image } from "src/app/shared/models/image-model";
+
 export interface Plan {
   id?: number
   planCategory: string,
   planType: string,
-  weekly_price: string,
-  monthly_price: string,
-  image: any,
-  action: any,
-  date: string,
-  meals: object[]
+  perMealPrice: string,
+  description: string,
+  isPublished: boolean,
+  image?: Image,
+  imageId?: string
 }

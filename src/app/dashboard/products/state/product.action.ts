@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Product } from '../models/products';
 import * as ProductModel from './product.model';
 
 export enum ProductActionTypes {
@@ -50,7 +51,7 @@ export const getProductByIdFailure = createAction(
 
 export const updateProduct = createAction(
   ProductActionTypes.UPDATE_PRODUCT,
-  props<{ product: ProductModel.Product }>()
+  props<{ product: Product,id: number }>()
 );
 export const updateProductSuccess = createAction(
   ProductActionTypes.UPDATE_PRODUCT_SUCCESS,

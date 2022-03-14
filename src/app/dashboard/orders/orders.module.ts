@@ -9,7 +9,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { ProductData } from '../../shared/product-data';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OrdersListComponent } from './components/orders-list/orders-list.component';
-import { OrdersByAddressComponent } from './orders-by-address/orders-by-address.component';
+import { OrdersByAddressComponent } from './components/orders-by-address/orders-by-address.component';
 import { NgxPrintModule } from 'ngx-print';
 import { SharedModule } from 'src/app/shared/shared.module';
 

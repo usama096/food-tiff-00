@@ -1,0 +1,59 @@
+<div fxlayout="row" fxLayoutAlign="space-between start">
+  <div class="fb-20 mb-12" fxFlexAlign="center">{{title}}</div>
+  <button mat-flat-button color="primary" class="mb-12" printSectionId="print-htmlData"
+    [printTitle]="'Orders_Report _' + printTitle.toString()" [useExistingCss]="true" ngxPrint>Print Orders
+    Report</button>
+</div>
+<mat-button-toggle-group>
+  <mat-button-toggle (click)="groupOrders('location')">Group by Address</mat-button-toggle>
+  <mat-button-toggle (click)="groupOrders('foodItem')">Group by FoodItem</mat-button-toggle>
+  <mat-button-toggle (click)="groupOrders('planType')">Group by Plantype</mat-button-toggle>
+  <mat-button-toggle (click)="groupOrders('deliverySlot')">Group by Delivery Slot</mat-button-toggle>
+
+</mat-button-toggle-group>
+<div class="main-container" id="print-htmlData">
+  <div fxLayout="column" fxLayoutGap="1.5%" *ngFor="let grp of groupeditems | keyvalue">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <div class="fb-16 ml-12 mt-12">{{grp.key}}
+      </div>
+      <div  class="fb-14 mr-12 mt-12">{{grp.value.length}}</div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1%">
+      <table mat-table [dataSource]="grp.value" class="mat-elevation-z0" fxFill>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mob-number">
+          <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
+          <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        </ng-container>
+        <ng-container matColumnDef="food-item">
+          <th mat-header-cell *matHeaderCellDef> Food Item </th>
+          <td mat-cell *matCellDef="let element"> {{element.foodItem[0]}} </td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element"> x {{element.quantity}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="plan">
+          <th mat-header-cell *matHeaderCellDef> Plan type </th>
+          <td mat-cell *matCellDef="let element"> {{element.planType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="delivery-slot">
+          <th mat-header-cell *matHeaderCellDef> Delivery Slot </th>
+          <td mat-cell *matCellDef="let element"> {{element.deliverySlot}} </td>
+        </ng-container>
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef> Address </th>
+          <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-divider [inset]="true" fxFlexAlign="center"></mat-divider>
+
+    </div>
+  </div>
+</div>

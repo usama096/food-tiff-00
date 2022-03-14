@@ -8,9 +8,12 @@ import { FormControl } from '@angular/forms';
 export class HomeComponent implements OnInit {
   total_Price: number = 0;
   saleData = [
-    { name: "Economy", value: 1500 },
+    { name: "Platinum", value: 1500 },
     { name: "Executive", value: 800 },
-    { name: "Low Cal", value: 1080 },
+    { name: "Gold", value: 1080 },
+    { name: "Silver", value: 1200 },
+    { name: "Keto Diet", value: 1300 },
+
   ];
   days = new FormControl('Today');
 
@@ -25,14 +28,14 @@ export class HomeComponent implements OnInit {
     }
   };
   dishes = [
-    { name: 'Top-end filet mingon', description: 'Easy Grilled Mengon', image: 'assets/images/burgers.png', price: '50' },
-    { name: 'Top-end filet chicken', description: 'Easy Grilled Mengon', image: 'assets/images/bakery.png', price: '60' },
-    { name: 'Top-end filet Pizza', description: 'Easy Baked Pizza', image: 'assets/images/soup.png', price: '70' }
+    { name: 'Top-end filet mingon', description: 'Easy Grilled Mengon', image: 'assets/images/daal.png', price: '50' },
+    { name: 'Top-end filet chicken', description: 'Easy Grilled Mengon', image: 'assets/images/daal.png', price: '60' },
+    { name: 'Top-end filet Pizza', description: 'Easy Baked Pizza', image: 'assets/images/daal.png', price: '70' }
   ];
   employees = [
-    { name: 'Anderson Silva', designation: 'Manager', image: 'assets/images/khabib.jpg', time: '6pm-8pm' },
-    { name: 'King Salman', designation: 'Cook', image: 'assets/images/salman.jpg', time: '10pm-12pm' },
-    { name: 'Donald Trump', designation: 'Waiter', image: 'assets/images/donald.jpg', time: '3pm-5pm' },
+    { name: 'Anderson Silva', designation: 'Manager', image: 'assets/images/daal.png', time: '6pm-8pm' },
+    { name: 'King Salman', designation: 'Cook', image: 'assets/images/daal.png', time: '10pm-12pm' },
+    { name: 'Donald Trump', designation: 'Waiter', image: 'assets/images/daal.png', time: '3pm-5pm' },
   ];
   upcomingOrders = [
     { customerName: 'Bruce Williams + 3', time: '11:00' },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { SpinnerService } from 'src/app/shared/spinner.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { AuthService } from '../services/auth.service';
 import { resetPassword } from '../state/auth.action';
 
@@ -69,26 +69,16 @@ export class ResetComponent implements OnInit {
     }
     debugger
     this.store.dispatch(resetPassword({ payload }));
-    this.store.select((state: any) => state.auth.authResponse).subscribe(
+    this.store.select((state: any) => state.auth).subscribe(
       (res) => {
-        if (res.Status === 'Success') {
+        if(!res){
+          return;
+        }
+        if (res.reset) {
           this.router.navigate(['../saved'], { relativeTo: this.route })
 
         }
       }
     )
-    // this.spinnerService.spinnerShow();
-    // this.authService.resetPassword(data.password, data.token).subscribe(
-    //   (res) => {
-    //     if (res.Status === 'Success') {
-    //       this.router.navigate(['../saved'], { relativeTo: this.route })
-    //     }
-    //   },
-    //   (err) => {
-    //     console.error(err)
-    //     this.spinnerService.spinnerHide();
-    //   },
-    //   () => this.spinnerService.spinnerHide()
-    // )
   }
 }

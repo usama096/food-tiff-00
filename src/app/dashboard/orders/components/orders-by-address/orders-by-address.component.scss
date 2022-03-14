@@ -1,0 +1,39 @@
+
+.main-container {
+  max-height: 580px !important;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+th {
+  color: #d53f12;
+}
+.mat-divider {
+  border: 1px solid #d53f12;
+  border-radius: 3px;
+  width: 50%;
+  margin: 15px;
+}
+mat-button-toggle {
+  padding: 0 !important;
+  width: 100%;
+  color: #d53f12;
+  font-weight: 500;
+}
+
+mat-button-toggle:hover {
+  background-color:#af2f0e81 !important;
+  color: white;
+}
+
+.mat-button-toggle-checked {
+  background-color: #d53f12 !important;
+  color: white !important;
+}
+
+.mat-button-toggle-input {
+  background-color: none !important;
+}
+.mat-button-toggle-group {
+  height: 32px;
+  align-items: center;
+}

@@ -2,8 +2,7 @@ export interface SignUpUser {
   firstName: string,
   lastName: string,
   email: string,
-  mobileNumber: string,
+  phoneNumber: string,
   password: string,
-  userType:string
   // confirmPassword: string
 }

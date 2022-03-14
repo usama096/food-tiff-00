@@ -4,14 +4,18 @@ import { AuthGuard } from './authentication/services/auth.guard';
 import { IsloggedinGuard } from './authentication/services/isloggedin.guard';
 import { PageNotFoundComponent } from './page-not-found.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'authentication', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'authentication',
-    loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
+    loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule),
+    canActivate: [IsloggedinGuard]
+
   },
   { path: '**', component: PageNotFoundComponent }
 ];

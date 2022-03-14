@@ -13,11 +13,12 @@ const routes: Routes = [
 children: [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'forgot-password-mobile', component: ForgotComponent },
-  { path: 'reset-password',  component: ResetComponent },
-  {path: 'verify-otp', component: VerificationComponent},
-  {path: 'saved', component: SavedComponent}
+  // { path: 'signup', component: SignupComponent },
+  // { path: 'forgot-password-mobile', component: ForgotComponent },
+  // { path: 'reset-password',  component: ResetComponent },
+  // {path: 'verify-otp', component: VerificationComponent},
+  // {path: 'saved', component: SavedComponent}
+  {path: '**', component: SigninComponent}
 
 ]}
 ]

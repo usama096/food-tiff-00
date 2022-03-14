@@ -8,7 +8,7 @@ import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './home/home.component';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
-import { UpcomingOrdersComponent } from './upcoming-orders/upcoming-orders.component';
+import { UpcomingOrdersComponent } from './home/upcoming-orders/upcoming-orders.component';
 
 
 @NgModule({

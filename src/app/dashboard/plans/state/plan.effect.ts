@@ -96,5 +96,24 @@ export class PlanEffects {
     )
   });
 
+  addPlanProducts$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(PlanAction.addPlanpProducts),
+      concatMap((action) => {
+        return this.plansService.createPlanProducts(action.planProducts).pipe(
+          map((response) => {
+            return PlanAction.addPlanpProductsSuccess({ response })
+          }),
+          catchError((error) => {
+            console.log(error)
+            return of(PlanAction.addPlanpProductsFailure({ error }))
+          })
+        )
+      })
+    )
+  });
+
+
+
 
 }

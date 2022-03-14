@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { SpinnerService } from 'src/app/shared/spinner.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { AuthService } from '../services/auth.service';
 import { otp, signUp } from '../state/auth.action';
 
@@ -14,7 +14,7 @@ export class VerificationComponent implements OnInit {
 
   @ViewChild("ngOtpInput", { static: false }) ngOtpInput: any;
   otpValue!: string;
-  mobileNumber!: string;
+  phoneNumber!: string;
   token!: string;
   mode!: string;
   config = {
@@ -34,9 +34,23 @@ export class VerificationComponent implements OnInit {
     private store: Store,
   ) { }
   ngOnInit(): void {
+    this.store.select((state: any) => state.auth).subscribe(
+      (res) => {
+        if(!res){
+          return;
+        }
+        if (res.otp) {
+          this.router.navigate(['../reset-password'], { relativeTo: this.route, queryParams: { token: res.otp.token } })
+        }
+        if(res.otp){
+          this.router.navigate(['/authentication'], { queryParams: { token: res.otp.token } })
+        }
+      }
+    )
+
     this.route.queryParams
       .subscribe(params => {
-        this.mobileNumber = params.mobileNumber
+        this.phoneNumber = params.phoneNumber
         this.mode = params.mode
       }
       );
@@ -49,29 +63,14 @@ export class VerificationComponent implements OnInit {
     if (this.otpValue.length === 6) {
       let payload = {
         otp: this.otpValue,
-        mobileNumber: this.mobileNumber,
+        phoneNumber: this.phoneNumber,
       }
       if (this.mode === 'reset') {
         this.store.dispatch(otp({ payload }));
-        this.store.select((state: any) => state.auth.authResponse).subscribe(
-          (res) => {
-            if (res.Status === 'Success') {
-              this.router.navigate(['../reset-password'], { relativeTo: this.route, queryParams: { token: res.User.token } })
-            }
-          }
-        )
 
       }
       if (this.mode === 'signup') {
         this.store.dispatch(otp({ payload }));
-        this.store.select((state: any) => state.auth.authResponse).subscribe(
-          (res) => {
-            if(res.Status === 'Success') {
-              this.router.navigate(['/authentication'], { queryParams: { token: res.User.token } })
-            }
-          }
-        )
-
       }
       // this.spinnerService.spinnerShow();
       // this.authService.otp(this.otpValue, this.mobileNumber).subscribe(

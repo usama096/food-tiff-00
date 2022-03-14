@@ -60,11 +60,17 @@
             <mat-icon fontSet="material-icons-outlined">list_alt</mat-icon>
             <small fxFlexAlign="center">Orders</small>
         </mat-nav-list>
-        <mat-nav-list [routerLink]="['users']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+        <mat-nav-list [routerLink]="['users']"  routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
             fxLayoutAlign="center center">
             <mat-icon fontSet="material-icons-outlined">people</mat-icon>
             <small fxFlexAlign="center">Users</small>
         </mat-nav-list>
+        <mat-nav-list [routerLink]="['code-lists']" routerLinkActive="active" fxLayout="column" fxLayoutGap="4px"
+        fxLayoutAlign="center center">
+        <mat-icon fontSet="material-icons-outlined">fact_check</mat-icon>
+        <small fxFlexAlign="center">CodeLists</small>
+    </mat-nav-list>
+
     </mat-drawer>
     <mat-drawer-content fxFlex="1 1 100%">
         <router-outlet></router-outlet>

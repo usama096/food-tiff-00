@@ -1,32 +1,36 @@
 <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="main-container">
   <div style="padding-right: 7px;" style="width: 100%;">
-   <div fxLayout ="row" fxLayoutAlign="space-between start" fxFill>
-    <mat-form-field appearance="fill" fxFlex="30">
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxFill>
+      <mat-form-field appearance="legacy" fxFlex="30">
 
-      <mat-label>Search Product</mat-label>
-      <input matInput type="text" [formControl]="search">
-      <button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear" (click)="search.reset()">
-        <mat-icon>close</mat-icon>
-      </button>    </mat-form-field>
+        <mat-label>Search Product</mat-label>
+        <input matInput type="text" [formControl]="search">
+        <button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear" (click)="search.reset()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-    <button mat-flat-button color="primary" (click)="addProduct()" fxFlex="10">
-      <mat-icon style="color: white">add</mat-icon>Add Product
-    </button>
+      <button mat-flat-button color="primary" (click)="addProduct()" fxFlex="10">
+        <mat-icon style="color: white">add</mat-icon>Add Product
+      </button>
 
-   </div>
+    </div>
 
   </div>
+  <h3 *ngIf="dataSource == [] || dataSource == null || !dataSource">No product found!</h3>
+
   <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 100%;">
-    <div fxFlex="33" *ngFor="let product of dataSource | filter: search.value"  class="products-display">
+    <div fxFlex="33" *ngFor="let product of dataSource | filter: search.value" class="products-display">
       <div fxLayout="row" fxLayoutGap="10px">
         <div class="image-container" fxFlexAlign="center" fxFlex="30">
-          <img [src]="product.image" alt="soup"/>
+          <img [src]="product.image?.downloadUrl" [alt]="product.image?.name" />
         </div>
         <div fxFlex="70">
           <div fxLayout="column" fxLayoutGap="5px" class="data-container">
             <div fxLayout="row" fxLayoutAlign="space-between start">
-              <div class="fb-14">{{ product.description }}</div>
-              <div class="f-14 f-800" fxFlex="30" fxLayoutAlign="end">{{product.price}} <span class="f-10">./Rs</span></div>
+              <div class="fb-14">{{ product.name }}</div>
+              <div class="f-14 f-800" fxFlex="30" fxLayoutAlign="end">{{product.price}} <span class="f-10">./Rs</span>
+              </div>
 
             </div>
             <div fxLayout="row" fxLayoutAlign="start start" fxFlexFill fxLayoutGap="10%">
@@ -51,9 +55,6 @@
                 <span class="fb-12">Serving </span>
               </div>
             </div>
-            <!-- <div fxFlexAlign="center">
-              {{ product.description }}
-            </div> -->
 
             <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlexFill class="action">
               <button mat-icon-button [routerLink]="[product.id]" matTooltip="View Details">

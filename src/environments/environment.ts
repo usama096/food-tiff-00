@@ -4,10 +4,12 @@
 
 export const environment = {
   production: false,
-  breakfast_meal_count: 2,
-  dinner_meal_count: 2,
+  breakfast_meal_count: 1,
+  dinner_meal_count: 1,
   lunch_meal_count: 2,
-  apiUrl:'http://192.168.1.134:3000/api'
+  supper_meal_count: 1,
+
+  apiUrl:'http://localhost:3000/api'
 };
 
 /*

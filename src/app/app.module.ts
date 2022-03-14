@@ -22,8 +22,12 @@ import { authReducer } from './authentication/state/auth.reducer';
 import { AuthEffects } from './authentication/state/auth.effect';
 import { productReducer } from './dashboard/products/state/product.reducer';
 import { planReducer } from './dashboard/plans/state/plan.reducer';
+import { userReducer } from './dashboard/users/state/user.reducer';
+
 import { orderReducer } from './dashboard/orders/state/order.reducer';
 import { ProductEffects } from './dashboard/products/state/product.effect';
+import { UserEffects } from './dashboard/users/state/user.effect';
+
 import { PlanEffects } from './dashboard/plans/state/plan.effect';
 import { OrderEffects } from './dashboard/orders/state/order.effect';
 @NgModule({
@@ -42,14 +46,14 @@ import { OrderEffects } from './dashboard/orders/state/order.effect';
     NgxChartsModule,
     NgxMatSelectSearchModule,
     NgxPrintModule,
-    InMemoryWebApiModule.forRoot(ProductData),
+    // InMemoryWebApiModule.forRoot(ProductData),
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    StoreModule.forRoot({ auth: authReducer, product: productReducer, plan: planReducer, order: orderReducer }),
-    EffectsModule.forRoot([AuthEffects,ProductEffects,PlanEffects,OrderEffects]),
+    StoreModule.forRoot({ auth: authReducer, product: productReducer, plan: planReducer, order: orderReducer,user:userReducer }),
+    EffectsModule.forRoot([AuthEffects,ProductEffects,PlanEffects,OrderEffects,UserEffects]),
 
   ],
   bootstrap: [AppComponent],

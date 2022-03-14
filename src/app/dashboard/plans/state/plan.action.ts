@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import * as PlanModel from './plan.model';
+import { Plan } from '../models/plan-model';
+import { PlanProducts } from '../models/plan-products-model';
 
 export enum PlanActionTypes {
   GET_PLANS = '[GET PLANS]',
@@ -21,6 +22,11 @@ export enum PlanActionTypes {
   ADD_PLAN = '[ADD PLAN]',
   ADD_PLAN_SUCCESS = '[ADD PLAN] SUCCESS',
   ADD_PLAN_FAILURE = '[ADD PLAN] FAILURE',
+
+  ADD_PLAN_PRODUCTS = '[ADD PLAN PRODUCTS]',
+  ADD_PLAN_PRODUCTS_SUCCESS = '[ADD PLAN PRODUCTS] SUCCESS',
+  ADD_PLAN_PRODUCTS_FAILURE = '[ADD PLAN PRODUCTS] FAILURE',
+
 }
 
 export const getPlans = createAction(PlanActionTypes.GET_PLANS);
@@ -50,11 +56,11 @@ export const getPlansByIdFailure = createAction(
 
 export const updatePlan = createAction(
   PlanActionTypes.UPDATE_PLAN,
-  props<{ plan: PlanModel.Plan}>()
+  props<{ plan: Plan}>()
 );
 export const updatePlanSuccess = createAction(
   PlanActionTypes.UPDATE_PLAN_SUCCESS,
-  props<{ response: any }>()
+  props<{ response: Plan }>()
 );
 export const updatePlanFailure = createAction(
   PlanActionTypes.UPDATE_PLAN_FAILURE,
@@ -74,7 +80,7 @@ export const deletePlanFailure = createAction(
 );
 export const addPlan = createAction(
   PlanActionTypes.ADD_PLAN,
-  props<{ plan: PlanModel.Plan }>()
+  props<{ plan: Plan }>()
 );
 export const addPlanSuccess = createAction(
   PlanActionTypes.ADD_PLAN_SUCCESS,
@@ -84,3 +90,16 @@ export const addPlanFailure = createAction(
   PlanActionTypes.ADD_PLAN_FAILURE,
   props<{ error: any }>()
 );
+export const addPlanpProducts = createAction(
+  PlanActionTypes.ADD_PLAN_PRODUCTS,
+  props<{ planProducts: PlanProducts[] }>()
+);
+export const addPlanpProductsSuccess = createAction(
+  PlanActionTypes.ADD_PLAN_PRODUCTS_SUCCESS,
+  props<{ response: any }>()
+);
+export const addPlanpProductsFailure = createAction(
+  PlanActionTypes.ADD_PLAN_PRODUCTS_SUCCESS,
+  props<{ error: any }>()
+);
+

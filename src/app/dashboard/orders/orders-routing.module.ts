@@ -1,4 +1,4 @@
-import { OrdersByAddressComponent } from './orders-by-address/orders-by-address.component';
+import { OrdersByAddressComponent } from './components/orders-by-address/orders-by-address.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrdersViewComponent } from './components/orders-view/orders-view.component';

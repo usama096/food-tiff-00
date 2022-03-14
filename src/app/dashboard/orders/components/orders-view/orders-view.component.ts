@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SharedService } from 'src/app/shared/shared.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 export interface Adon {
   name: string,
   price: number,
@@ -71,9 +71,9 @@ export class OrdersViewComponent implements OnInit {
   };
 
   orders = [
-    { name: "Fruity Pancakes", price: 200, number_of_orders: 2, details: 'Drink', image: 'assets/images/bakery.png', adons: 'Drink, Snacks, Deserts' },
-    { name: "Special Soup", price: 400, number_of_orders: 6, details: 'Desert', image: 'assets/images/soup.png', adons: 'Drink, Snacks, Deserts' },
-    { name: "Chinies Rice", price: 300, number_of_orders: 7, details: 'Snacks', image: 'assets/images/chinies.png', adons: 'Drink, Snacks, Deserts' },
+    { name: "Fruity Pancakes", price: 200, number_of_orders: 2, details: 'Drink', image: 'assets/images/daal.png', adons: 'Drink, Snacks, Deserts' },
+    { name: "Special Soup", price: 400, number_of_orders: 6, details: 'Desert', image: 'assets/images/Beaf Pulao.png', adons: 'Drink, Snacks, Deserts' },
+    { name: "Chinies Rice", price: 300, number_of_orders: 7, details: 'Snacks', image: 'assets/images/Biryani 3.png', adons: 'Drink, Snacks, Deserts' },
   ];
 
   acceptOrder() {
